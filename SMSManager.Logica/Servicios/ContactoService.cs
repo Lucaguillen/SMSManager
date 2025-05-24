@@ -2,13 +2,58 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using SMSManager.Datos.Database;
+using SMSManager.Datos.Repositorios;
+using SMSManager.Logica.Utilidades;
 using SMSManager.Objetos.Modelos;
+using SMSManager.Objetos.Resultados;
 using SMSManager.Utilidades.Logging;
 
 namespace SMSManager.Logica.Servicios
 {
     public class ContactoService
     {
+        private readonly ContactoRepository contactoRepository;
+
+        public ContactoService()
+        {
+            contactoRepository = new ContactoRepository();
+        }
+
+        public ResultadoImportacion ImportarDesdeCsv(string rutaArchivo)
+        {
+            var resultado = new ResultadoImportacion();
+            List<Contacto> contactos = CsvUtils.LeerContactosDesdeCsv(rutaArchivo);
+
+            foreach (var contacto in contactos)
+            {
+                if (EsContactoValido(contacto) && !YaExiste(contacto))
+                {
+                    contactoRepository.Insertar(contacto);
+                    resultado.ContactosImportados++;
+                }
+                else
+                {
+                    resultado.ContactosFallidos++;
+                }
+            }
+
+            return resultado;
+        }
+
+        private bool EsContactoValido(Contacto contacto)
+        {
+            return !string.IsNullOrWhiteSpace(contacto.Nombre) &&
+                   !string.IsNullOrWhiteSpace(contacto.Apellido) &&
+                   !string.IsNullOrWhiteSpace(contacto.Telefono);
+        }
+
+        private bool YaExiste(Contacto contacto)
+        {
+            return contactoRepository.ExisteCedula(contacto.Cedula) ||
+                   contactoRepository.ExisteTelefono(contacto.Telefono) ||
+                   contactoRepository.ExisteMatricula(contacto.Matricula);
+        }
+
         public List<Contacto> ObtenerTodos()
         {
             var listaContactos = new List<Contacto>();

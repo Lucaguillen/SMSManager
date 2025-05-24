@@ -170,6 +170,29 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
 
+        }
+
+        private void btnImportar_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos CSV (*.csv)|*.csv";
+            openFileDialog.Title = "Seleccionar archivo CSV";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string rutaArchivo = openFileDialog.FileName;
+                var servicio = new ContactoService();
+
+                var resultado = servicio.ImportarDesdeCsv(rutaArchivo);
+
+                MessageBox.Show($"Contactos importados: {resultado.ContactosImportados}\nErrores: {resultado.ContactosFallidos}",
+                                "Importación finalizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                CargarContactos(); // Recargar la lista
+            }
+        }
     }
 }

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SMSManager.Datos\SMSManager.Datos.csproj" />
     <ProjectReference Include="..\SMSManager.Objetos\SMSManager.Objetos.csproj" />
     <ProjectReference Include="..\SMSManager.Utilidades\SMSManager.Utilidades.csproj" />

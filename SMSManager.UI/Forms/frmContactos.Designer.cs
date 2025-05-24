@@ -35,6 +35,7 @@
             btnActualizar = new Button();
             txtBuscar = new TextBox();
             btnBuscar = new Button();
+            btnImportar = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvContactos).BeginInit();
             SuspendLayout();
             // 
@@ -92,15 +93,16 @@
             // 
             // txtBuscar
             // 
-            txtBuscar.Location = new Point(436, 12);
+            txtBuscar.Location = new Point(663, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Size = new Size(140, 25);
             txtBuscar.TabIndex = 6;
+            txtBuscar.TextChanged += txtBuscar_TextChanged;
             // 
             // btnBuscar
             // 
             btnBuscar.Font = new Font("Segoe UI", 10F);
-            btnBuscar.Location = new Point(582, 12);
+            btnBuscar.Location = new Point(809, 12);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(100, 26);
             btnBuscar.TabIndex = 7;
@@ -108,11 +110,23 @@
             btnBuscar.UseVisualStyleBackColor = true;
             btnBuscar.Click += btnBuscar_Click;
             // 
+            // btnImportar
+            // 
+            btnImportar.Font = new Font("Segoe UI", 10F);
+            btnImportar.Location = new Point(436, 12);
+            btnImportar.Name = "btnImportar";
+            btnImportar.Size = new Size(120, 26);
+            btnImportar.TabIndex = 8;
+            btnImportar.Text = "Importar .csv 📄";
+            btnImportar.UseVisualStyleBackColor = true;
+            btnImportar.Click += btnImportar_Click;
+            // 
             // frmContactos
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(921, 510);
+            Controls.Add(btnImportar);
             Controls.Add(btnBuscar);
             Controls.Add(txtBuscar);
             Controls.Add(btnActualizar);
@@ -138,5 +152,6 @@
         private Button btnActualizar;
         private TextBox txtBuscar;
         private Button btnBuscar;
+        private Button btnImportar;
     }
 }
