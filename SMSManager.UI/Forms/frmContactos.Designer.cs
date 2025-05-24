@@ -33,6 +33,8 @@
             btnEditar = new Button();
             btnEliminar = new Button();
             btnActualizar = new Button();
+            txtBuscar = new TextBox();
+            btnBuscar = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvContactos).BeginInit();
             SuspendLayout();
             // 
@@ -88,11 +90,31 @@
             btnActualizar.UseVisualStyleBackColor = true;
             btnActualizar.Click += btnActualizar_Click;
             // 
+            // txtBuscar
+            // 
+            txtBuscar.Location = new Point(436, 12);
+            txtBuscar.Name = "txtBuscar";
+            txtBuscar.Size = new Size(140, 25);
+            txtBuscar.TabIndex = 6;
+            // 
+            // btnBuscar
+            // 
+            btnBuscar.Font = new Font("Segoe UI", 10F);
+            btnBuscar.Location = new Point(582, 12);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(100, 26);
+            btnBuscar.TabIndex = 7;
+            btnBuscar.Text = "Buscar 🔍";
+            btnBuscar.UseVisualStyleBackColor = true;
+            btnBuscar.Click += btnBuscar_Click;
+            // 
             // frmContactos
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(921, 510);
+            Controls.Add(btnBuscar);
+            Controls.Add(txtBuscar);
             Controls.Add(btnActualizar);
             Controls.Add(btnEliminar);
             Controls.Add(btnEditar);
@@ -104,6 +126,7 @@
             Load += frmContactos_Load;
             ((System.ComponentModel.ISupportInitialize)dgvContactos).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -113,5 +136,7 @@
         private Button btnEditar;
         private Button btnEliminar;
         private Button btnActualizar;
+        private TextBox txtBuscar;
+        private Button btnBuscar;
     }
 }

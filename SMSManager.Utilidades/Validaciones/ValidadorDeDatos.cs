@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
 using SMSManager.Objetos.Modelos;
+using System.Globalization;
 
 namespace SMSManager.Utilidades.Validaciones
 {
@@ -27,6 +28,14 @@ namespace SMSManager.Utilidades.Validaciones
         {
             // Exactamente 8 dígitos
             return Regex.IsMatch(cedula, @"^\d{8}$");
+        }
+        public static string NormalizarTexto(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return string.Empty;
+
+            var normalizado = texto.Normalize(NormalizationForm.FormD);
+            var chars = normalizado.Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark);
+            return new string(chars.ToArray()).ToLower().Replace("ñ", "n");
         }
     }
 }

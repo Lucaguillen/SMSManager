@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Globalization;
+using FuzzySharp;
+using SMSManager.Logica.Servicios;
+using SMSManager.Objetos.Modelos;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,9 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SMSManager.Logica.Servicios;
-using SMSManager.Objetos.Modelos;
 using SMSManager.Utilidades.Logging;
+using SMSManager.Utilidades.Validaciones;
 
 namespace SMSManager.UI.Forms
 {
@@ -58,7 +61,7 @@ namespace SMSManager.UI.Forms
                     {
                         if (frm.ShowDialog() == DialogResult.OK)
                         {
-                            CargarContactos(); 
+                            CargarContactos();
                         }
                     }
                 }
@@ -98,6 +101,43 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            BuscarContactos();
+        }
+        private bool EsSimilar(string entrada, string campo)
+        {
+            if (string.IsNullOrEmpty(campo)) return false;
+
+            string normalCampo = ValidadorDeDatos.NormalizarTexto(campo);
+            if (normalCampo.Contains(entrada)) return true;
+
+            int score = Fuzz.PartialRatio(entrada, normalCampo);
+            return score >= 75;
+        }
+
+
+        private void BuscarContactos()
+        {
+            string textoFiltro = ValidadorDeDatos.NormalizarTexto(txtBuscar.Text.Trim());
+            var servicio = new ContactoService();
+            var listaOriginal = servicio.ObtenerTodos();
+
+            var listaFiltrada = listaOriginal.Where(c =>
+                EsSimilar(textoFiltro, c.Nombre) ||
+                EsSimilar(textoFiltro, c.Apellido) ||
+                EsSimilar(textoFiltro, c.Telefono) ||
+                EsSimilar(textoFiltro, c.Cedula) ||
+                EsSimilar(textoFiltro, c.Matricula)
+            ).ToList();
+
+            dgvContactos.DataSource = null;
+            dgvContactos.DataSource = listaFiltrada;
+            dgvContactos.Columns["Id"].Visible = false;
+            dgvContactos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             try
@@ -115,7 +155,7 @@ namespace SMSManager.UI.Forms
                         Logger.LogInfo($"Contacto eliminado: ID {contactoSeleccionado.Id} - {contactoSeleccionado.Nombre}");
 
 
-                        CargarContactos(); 
+                        CargarContactos();
                     }
                 }
                 else
@@ -129,5 +169,7 @@ namespace SMSManager.UI.Forms
                 MessageBox.Show("Ocurrió un error al intentar eliminar el contacto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
     }
 }
