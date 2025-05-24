@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SMSManager.Logica\SMSManager.Logica.csproj" />
+    <ProjectReference Include="..\SMSManager.Objetos\SMSManager.Objetos.csproj" />
+    <ProjectReference Include="..\SMSManager.Utilidades\SMSManager.Utilidades.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Forms\frmEditarContacto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
