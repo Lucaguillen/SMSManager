@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Text.RegularExpressions;
-using SMSManager.Logica.Servicios;
 using SMSManager.Objetos.Modelos;
 
 namespace SMSManager.Utilidades.Validaciones
@@ -29,31 +28,5 @@ namespace SMSManager.Utilidades.Validaciones
             // Exactamente 8 dígitos
             return Regex.IsMatch(cedula, @"^\d{8}$");
         }
-
-        public static bool ExisteMatricula(string matricula)
-        {
-            if (string.IsNullOrWhiteSpace(matricula)) return false;
-
-            ContactoService service = new ContactoService();
-            return service.ObtenerTodos().Any(c => c.Matricula == matricula);
-        }
-
-        public static bool ExisteCedula(string cedula)
-        {
-            if (string.IsNullOrWhiteSpace(cedula)) return false;
-
-            ContactoService service = new ContactoService();
-            return service.ObtenerTodos().Any(c => c.Cedula == cedula);
-        }
-
-        public static bool ExisteTelefono(string tel)
-        {
-            if (string.IsNullOrWhiteSpace(tel)) return false;
-
-            ContactoService service = new ContactoService();
-            return service.ObtenerTodos().Any(c => c.Telefono == tel);
-        }
-
-
     }
 }

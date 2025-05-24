@@ -7,7 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\SMSManager.Logica\SMSManager.Logica.csproj" />
 		<ProjectReference Include="..\SMSManager.Objetos\SMSManager.Objetos.csproj" />
 	</ItemGroup>
 

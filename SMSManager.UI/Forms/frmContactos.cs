@@ -43,7 +43,10 @@ namespace SMSManager.UI.Forms
         }
         private void frmContactos_Load(object sender, EventArgs e)
         {
-            CargarContactos();
+            if (!DesignMode)
+            {
+                CargarContactos();
+            }
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {

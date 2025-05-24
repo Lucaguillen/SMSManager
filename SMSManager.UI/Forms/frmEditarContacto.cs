@@ -11,6 +11,7 @@ using SMSManager.Logica.Servicios;
 using SMSManager.Objetos.Modelos;
 using SMSManager.Utilidades.Logging;
 using SMSManager.Utilidades.Validaciones;
+using SMSManager.Logica.Utilidades;
 
 
 namespace SMSManager.UI.Forms
@@ -37,9 +38,11 @@ namespace SMSManager.UI.Forms
                 string nuevoTelefono = txtTelefono.Text.Trim();
                 string nuevaCedula = txtCedula.Text.Trim();
                 string nuevaMatricula = txtMatricula.Text.Trim();
+                string nuevoApellido = txtApellido.Text.Trim();
+                string nuevoNombre = txtNombre.Text.Trim();
 
                 // Validar duplicados solo si el usuario cambió el teléfono
-                if (nuevoTelefono != contactoEditar.Telefono && ValidadorDeDatos.ExisteTelefono(nuevoTelefono))
+                if (nuevoTelefono != contactoEditar.Telefono && UtilidadesLogica.ExisteTelefono(nuevoTelefono))
                 {
                     MessageBox.Show("Ya existe un contacto con ese número de teléfono.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -48,7 +51,7 @@ namespace SMSManager.UI.Forms
                 // Validar duplicados solo si el usuario cambió la cédula
                 if (!string.IsNullOrWhiteSpace(nuevaCedula) &&
                     nuevaCedula != contactoEditar.Cedula &&
-                    ValidadorDeDatos.ExisteCedula(nuevaCedula))
+                    UtilidadesLogica.ExisteCedula(nuevaCedula)) 
                 {
                     MessageBox.Show("Ya existe un contacto con esa cédula.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -57,15 +60,15 @@ namespace SMSManager.UI.Forms
                 // Validar duplicados solo si el usuario cambió la matrícula
                 if (!string.IsNullOrWhiteSpace(nuevaMatricula) &&
                     nuevaMatricula != contactoEditar.Matricula &&
-                    ValidadorDeDatos.ExisteMatricula(nuevaMatricula))
+                    UtilidadesLogica.ExisteMatricula(nuevaMatricula))
                 {
                     MessageBox.Show("Ya existe un contacto con esa matrícula.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Asignar valores actualizados
-                contactoEditar.Nombre = txtNombre.Text.Trim();
-                contactoEditar.Apellido = txtApellido.Text.Trim();
+                contactoEditar.Nombre = nuevoNombre;
+                contactoEditar.Apellido = nuevoApellido;
                 contactoEditar.Telefono = nuevoTelefono;
                 contactoEditar.Cedula = nuevaCedula;
                 contactoEditar.Matricula = nuevaMatricula;
@@ -130,6 +133,8 @@ namespace SMSManager.UI.Forms
                     txtNombre.Text = contactoEditar.Nombre;
                     txtTelefono.Text = contactoEditar.Telefono;
                     txtCedula.Text = contactoEditar.Cedula;
+                    txtMatricula.Text = contactoEditar.Matricula;
+                    txtApellido.Text = contactoEditar.Apellido;
                 }
                 else
                 {

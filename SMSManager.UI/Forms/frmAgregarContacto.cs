@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SMSManager.Logica.Servicios;
+using SMSManager.Logica.Utilidades;
 using SMSManager.Objetos.Modelos;
 using SMSManager.Utilidades.Logging;
 using SMSManager.Utilidades.Validaciones;
@@ -71,7 +72,7 @@ namespace SMSManager.UI.Forms
 
 
                 // Validar duplicados
-                if (ValidadorDeDatos.ExisteTelefono(nuevoContacto.Telefono))
+                if (UtilidadesLogica.ExisteTelefono(nuevoContacto.Telefono))
                 {
                     MessageBox.Show("Ya existe un contacto con ese número de teléfono.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Intento de agregar un contacto con un teléfono duplicado.");
@@ -79,13 +80,13 @@ namespace SMSManager.UI.Forms
                 }
 
 
-                if (!string.IsNullOrWhiteSpace(nuevoContacto.Cedula) && ValidadorDeDatos.ExisteCedula(nuevoContacto.Cedula))
+                if (!string.IsNullOrWhiteSpace(nuevoContacto.Cedula) && UtilidadesLogica.ExisteCedula(nuevoContacto.Cedula))
                 {
                     MessageBox.Show("Ya existe un contacto con esa cédula.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Intento de agregar un contacto con una cedula duplicada.");
                     return;
                 }
-                if (ValidadorDeDatos.ExisteMatricula(nuevoContacto.Matricula))
+                if (UtilidadesLogica.ExisteMatricula(nuevoContacto.Matricula))
                 {
                     MessageBox.Show("Ya existe un contacto con esa Matricula.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Intento de agregar un contacto con una matricula duplicada.");
