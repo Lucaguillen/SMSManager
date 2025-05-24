@@ -188,11 +188,28 @@ namespace SMSManager.UI.Forms
 
                 var resultado = servicio.ImportarDesdeCsv(rutaArchivo);
 
-                MessageBox.Show($"Contactos importados: {resultado.ContactosImportados}\nErrores: {resultado.ContactosFallidos}",
-                                "Importación finalizada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                StringBuilder mensaje = new StringBuilder();
+                mensaje.AppendLine($"✔ Contactos importados: {resultado.ContactosImportados}");
+                mensaje.AppendLine($"❌ Contactos fallidos: {resultado.ContactosFallidos}");
 
-                CargarContactos(); // Recargar la lista
+                if (resultado.Errores.Any())
+                {
+                    mensaje.AppendLine("\nDetalles de errores:");
+                    foreach (var error in resultado.Errores)
+                    {
+                        mensaje.AppendLine($"- {error}");
+                    }
+                }
+
+                MessageBox.Show(mensaje.ToString(), "Resultado de la Importación", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                CargarContactos();
             }
+        }
+
+        private void nuevoCuerpoDeMensajeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

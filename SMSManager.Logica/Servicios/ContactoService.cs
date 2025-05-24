@@ -26,15 +26,22 @@ namespace SMSManager.Logica.Servicios
 
             foreach (var contacto in contactos)
             {
-                if (EsContactoValido(contacto) && !YaExiste(contacto))
-                {
-                    contactoRepository.Insertar(contacto);
-                    resultado.ContactosImportados++;
-                }
-                else
+                if (!EsContactoValido(contacto))
                 {
                     resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Contacto inválido: {contacto.Nombre} {contacto.Apellido} (faltan campos obligatorios)");
+                    continue;
                 }
+
+                if (YaExiste(contacto))
+                {
+                    resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (cédula, teléfono o matrícula ya existe)");
+                    continue;
+                }
+
+                contactoRepository.Insertar(contacto);
+                resultado.ContactosImportados++;
             }
 
             return resultado;

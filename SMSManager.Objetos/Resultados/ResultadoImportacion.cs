@@ -10,6 +10,8 @@ namespace SMSManager.Objetos.Resultados
     {
         public int ContactosImportados { get; set; }
         public int ContactosFallidos { get; set; }
+
+        public List<string> Errores { get; set; } = new();
     }
 
 }

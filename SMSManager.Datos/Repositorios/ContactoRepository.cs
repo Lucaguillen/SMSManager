@@ -15,7 +15,7 @@ namespace SMSManager.Datos.Repositorios
         public  void Insertar(Contacto contacto)
         {
             using var connection = DatabaseManager.ObtenerConexion();
-            connection.Open();
+
 
             using var command = connection.CreateCommand();
             command.CommandText = @"
@@ -49,8 +49,6 @@ namespace SMSManager.Datos.Repositorios
         private  bool ExisteCampo(string campo, string valor)
         {
             using var connection = DatabaseManager.ObtenerConexion();
-            connection.Open();
-
             using var command = connection.CreateCommand();
             command.CommandText = $"SELECT COUNT(1) FROM Contactos WHERE {campo} = @Valor";
             command.Parameters.AddWithValue("@Valor", valor ?? "");

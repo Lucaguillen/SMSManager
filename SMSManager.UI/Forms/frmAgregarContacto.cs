@@ -39,7 +39,7 @@ namespace SMSManager.UI.Forms
                 };
 
 
-                if (string.IsNullOrWhiteSpace(nuevoContacto.Nombre) || string.IsNullOrWhiteSpace(nuevoContacto.Telefono) || string.IsNullOrEmpty(nuevoContacto.Matricula) || string.IsNullOrEmpty(nuevoContacto.Apellido))
+                if (string.IsNullOrWhiteSpace(nuevoContacto.Nombre) || string.IsNullOrWhiteSpace(nuevoContacto.Telefono) || string.IsNullOrEmpty(nuevoContacto.Apellido))
                 {
                     MessageBox.Show("Todos los campos son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Todos los campos son obligatorios.");    
