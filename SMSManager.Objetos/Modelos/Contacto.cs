@@ -11,5 +11,7 @@ namespace SMSManager.Objetos.Modelos
         public string Cedula { get; set; } = string.Empty;
         public string? Matricula { get; set; }
         public string Seudonimo { get; set; } = string.Empty;
+        public bool Seleccionado { get; set; } = false;
+
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using SMSManager.Objetos.Modelos;
 using System.Globalization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SMSManager.Utilidades.Validaciones
 {
@@ -14,20 +15,21 @@ namespace SMSManager.Utilidades.Validaciones
     {
         public static bool NombreEsValido(string nombre)
         {
-            // Permite solo letras y espacios
-            return Regex.IsMatch(nombre, @"^[a-zA-Z\s]+$");
+            return string.IsNullOrEmpty(nombre) || Regex.IsMatch(nombre, @"^[a-zA-Z\s]+$");
+
+
         }
 
         public static bool TelefonoEsValido(string telefono)
         {
             // Exactamente 9 dígitos
-            return Regex.IsMatch(telefono, @"^\d{9}$");
+            return string.IsNullOrEmpty(telefono) || Regex.IsMatch(telefono, @"^\d{9}$");
         }
 
         public static bool CedulaEsValida(string cedula)
         {
             // Exactamente 8 dígitos
-            return Regex.IsMatch(cedula, @"^\d{8}$");
+            return string.IsNullOrEmpty(cedula) || Regex.IsMatch(cedula, @"^\d{8}$");
         }
         public static string NormalizarTexto(string texto)
         {

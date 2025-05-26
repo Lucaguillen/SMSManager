@@ -47,6 +47,12 @@ namespace SMSManager.Datos.Database
                     Seudonimo TEXT NOT NULL
                 );
 
+                CREATE TABLE IF NOT EXISTS Formatos (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Nombre TEXT NOT NULL UNIQUE,
+                    Cuerpo TEXT NOT NULL
+                );
+
                 CREATE TABLE IF NOT EXISTS Plantillas (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Nombre TEXT NOT NULL,

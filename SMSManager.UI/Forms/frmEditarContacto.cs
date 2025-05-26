@@ -48,6 +48,11 @@ namespace SMSManager.UI.Forms
                     MessageBox.Show("Ya existe un contacto con ese número de teléfono.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (nuevoSeudonimo != contactoEditar.Seudonimo && UtilidadesLogica.ExisteSeudonimo(nuevoSeudonimo))
+                {
+                    MessageBox.Show("Ya existe un contacto con ese Seudonimo.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 // Validar duplicados solo si el usuario cambió la cédula
                 if (!string.IsNullOrWhiteSpace(nuevaCedula) &&
@@ -113,7 +118,7 @@ namespace SMSManager.UI.Forms
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Error al actualizar contacto: {ex.Message} - {ex.StackTrace}");
+                Logger.LogError($"Error al actualizar contacto en frmContacto: {ex.Message} - {ex.StackTrace}");
                 MessageBox.Show("Ocurrió un error al intentar guardar los cambios.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

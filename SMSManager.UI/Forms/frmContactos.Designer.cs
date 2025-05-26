@@ -39,17 +39,8 @@
             btnImportar = new Button();
             contextMenuStrip1 = new ContextMenuStrip(components);
             contextMenuStrip2 = new ContextMenuStrip(components);
-            menuStrip1 = new MenuStrip();
-            contactosToolStripMenuItem = new ToolStripMenuItem();
-            irAContactosToolStripMenuItem = new ToolStripMenuItem();
-            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem = new ToolStripMenuItem();
-            mensajesToolStripMenuItem = new ToolStripMenuItem();
-            nuevoMensajeToolStripMenuItem = new ToolStripMenuItem();
-            nuevoCuerpoDeMensajeToolStripMenuItem = new ToolStripMenuItem();
-            verFormatosToolStripMenuItem = new ToolStripMenuItem();
-            configuracionToolStripMenuItem = new ToolStripMenuItem();
+            btnVolver = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvContactos).BeginInit();
-            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvContactos
@@ -57,7 +48,7 @@
             dgvContactos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvContactos.Location = new Point(12, 58);
             dgvContactos.Name = "dgvContactos";
-            dgvContactos.Size = new Size(897, 454);
+            dgvContactos.Size = new Size(902, 454);
             dgvContactos.TabIndex = 0;
             // 
             // btnAgregar
@@ -106,7 +97,7 @@
             // 
             // txtBuscar
             // 
-            txtBuscar.Location = new Point(663, 26);
+            txtBuscar.Location = new Point(562, 27);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Size = new Size(140, 25);
             txtBuscar.TabIndex = 6;
@@ -115,7 +106,7 @@
             // btnBuscar
             // 
             btnBuscar.Font = new Font("Segoe UI", 10F);
-            btnBuscar.Location = new Point(809, 26);
+            btnBuscar.Location = new Point(708, 26);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(100, 26);
             btnBuscar.TabIndex = 7;
@@ -144,74 +135,23 @@
             contextMenuStrip2.Name = "contextMenuStrip2";
             contextMenuStrip2.Size = new Size(61, 4);
             // 
-            // menuStrip1
+            // btnVolver
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { contactosToolStripMenuItem, mensajesToolStripMenuItem, configuracionToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(924, 24);
-            menuStrip1.TabIndex = 11;
-            menuStrip1.Text = "menuStrip1";
-            // 
-            // contactosToolStripMenuItem
-            // 
-            contactosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { irAContactosToolStripMenuItem, eLIMINARTODOSLOSCONTACTOSToolStripMenuItem });
-            contactosToolStripMenuItem.Name = "contactosToolStripMenuItem";
-            contactosToolStripMenuItem.Size = new Size(73, 20);
-            contactosToolStripMenuItem.Text = "Contactos";
-            // 
-            // irAContactosToolStripMenuItem
-            // 
-            irAContactosToolStripMenuItem.Name = "irAContactosToolStripMenuItem";
-            irAContactosToolStripMenuItem.Size = new Size(261, 22);
-            irAContactosToolStripMenuItem.Text = "Ir a Contactos";
-            irAContactosToolStripMenuItem.Click += irAContactosToolStripMenuItem_Click;
-            // 
-            // eLIMINARTODOSLOSCONTACTOSToolStripMenuItem
-            // 
-            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Name = "eLIMINARTODOSLOSCONTACTOSToolStripMenuItem";
-            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Size = new Size(261, 22);
-            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Text = "ELIMINAR TODOS LOS CONTACTOS";
-            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Click += eLIMINARTODOSLOSCONTACTOSToolStripMenuItem_Click;
-            // 
-            // mensajesToolStripMenuItem
-            // 
-            mensajesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nuevoMensajeToolStripMenuItem, nuevoCuerpoDeMensajeToolStripMenuItem, verFormatosToolStripMenuItem });
-            mensajesToolStripMenuItem.Name = "mensajesToolStripMenuItem";
-            mensajesToolStripMenuItem.Size = new Size(68, 20);
-            mensajesToolStripMenuItem.Text = "Mensajes";
-            // 
-            // nuevoMensajeToolStripMenuItem
-            // 
-            nuevoMensajeToolStripMenuItem.Name = "nuevoMensajeToolStripMenuItem";
-            nuevoMensajeToolStripMenuItem.Size = new Size(157, 22);
-            nuevoMensajeToolStripMenuItem.Text = "Nuevo Mensaje";
-            // 
-            // nuevoCuerpoDeMensajeToolStripMenuItem
-            // 
-            nuevoCuerpoDeMensajeToolStripMenuItem.Name = "nuevoCuerpoDeMensajeToolStripMenuItem";
-            nuevoCuerpoDeMensajeToolStripMenuItem.Size = new Size(157, 22);
-            nuevoCuerpoDeMensajeToolStripMenuItem.Text = "Nuevo Formato";
-            nuevoCuerpoDeMensajeToolStripMenuItem.Click += nuevoCuerpoDeMensajeToolStripMenuItem_Click;
-            // 
-            // verFormatosToolStripMenuItem
-            // 
-            verFormatosToolStripMenuItem.Name = "verFormatosToolStripMenuItem";
-            verFormatosToolStripMenuItem.Size = new Size(157, 22);
-            verFormatosToolStripMenuItem.Text = "Ver Formatos";
-            // 
-            // configuracionToolStripMenuItem
-            // 
-            configuracionToolStripMenuItem.Name = "configuracionToolStripMenuItem";
-            configuracionToolStripMenuItem.Size = new Size(95, 20);
-            configuracionToolStripMenuItem.Text = "Configuracion";
+            btnVolver.Font = new Font("Segoe UI", 10F);
+            btnVolver.Location = new Point(814, 26);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(100, 26);
+            btnVolver.TabIndex = 9;
+            btnVolver.Text = "Volver ⬅️";
+            btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click;
             // 
             // frmContactos
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(924, 521);
-            Controls.Add(menuStrip1);
+            ClientSize = new Size(923, 521);
+            Controls.Add(btnVolver);
             Controls.Add(btnImportar);
             Controls.Add(btnBuscar);
             Controls.Add(txtBuscar);
@@ -221,13 +161,19 @@
             Controls.Add(btnAgregar);
             Controls.Add(dgvContactos);
             Font = new Font("Segoe UI", 10F);
-            MainMenuStrip = menuStrip1;
             Name = "frmContactos";
             Text = "frmContactos";
             Load += frmContactos_Load;
+            Controls.SetChildIndex(dgvContactos, 0);
+            Controls.SetChildIndex(btnAgregar, 0);
+            Controls.SetChildIndex(btnEditar, 0);
+            Controls.SetChildIndex(btnEliminar, 0);
+            Controls.SetChildIndex(btnActualizar, 0);
+            Controls.SetChildIndex(txtBuscar, 0);
+            Controls.SetChildIndex(btnBuscar, 0);
+            Controls.SetChildIndex(btnImportar, 0);
+            Controls.SetChildIndex(btnVolver, 0);
             ((System.ComponentModel.ISupportInitialize)dgvContactos).EndInit();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -244,14 +190,6 @@
         private Button btnImportar;
         private ContextMenuStrip contextMenuStrip1;
         private ContextMenuStrip contextMenuStrip2;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem contactosToolStripMenuItem;
-        private ToolStripMenuItem mensajesToolStripMenuItem;
-        private ToolStripMenuItem nuevoMensajeToolStripMenuItem;
-        private ToolStripMenuItem nuevoCuerpoDeMensajeToolStripMenuItem;
-        private ToolStripMenuItem verFormatosToolStripMenuItem;
-        private ToolStripMenuItem configuracionToolStripMenuItem;
-        private ToolStripMenuItem irAContactosToolStripMenuItem;
-        private ToolStripMenuItem eLIMINARTODOSLOSCONTACTOSToolStripMenuItem;
+        private Button btnVolver;
     }
 }

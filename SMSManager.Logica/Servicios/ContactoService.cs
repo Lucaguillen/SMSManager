@@ -132,7 +132,7 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula, Seudonimo = @Matricula WHERE Id = @Id", connection);
+                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula = @Matricula, Seudonimo = @Seudonimo WHERE Id = @Id", connection);
 
                     command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
                     command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
@@ -149,7 +149,7 @@ namespace SMSManager.Logica.Servicios
             }
             catch (Exception ex)
             {
-                Logger.LogError($"Error al actualizar el contacto: {ex.Message} - {ex.StackTrace}");    
+                Logger.LogError($"Error al actualizar el contacto en el servicio: {ex.Message} - {ex.StackTrace}");    
                 throw new Exception("Error al actualizar el contacto.", ex);
             }
         }
