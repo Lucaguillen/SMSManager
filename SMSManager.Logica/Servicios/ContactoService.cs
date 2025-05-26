@@ -36,7 +36,7 @@ namespace SMSManager.Logica.Servicios
                 if (YaExiste(contacto))
                 {
                     resultado.ContactosFallidos++;
-                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (cédula, teléfono o matrícula ya existe)");
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (cédula, teléfono, matrícula o Seudonimo ya existe)");
                     continue;
                 }
 
@@ -49,8 +49,7 @@ namespace SMSManager.Logica.Servicios
 
         private bool EsContactoValido(Contacto contacto)
         {
-            return !string.IsNullOrWhiteSpace(contacto.Nombre) &&
-                   !string.IsNullOrWhiteSpace(contacto.Apellido) &&
+            return !string.IsNullOrWhiteSpace(contacto.Seudonimo) &&
                    !string.IsNullOrWhiteSpace(contacto.Telefono);
         }
 
@@ -69,7 +68,7 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("SELECT Id, Nombre, Apellido, Telefono, Cedula, Matricula FROM Contactos", connection);
+                    var command = new SQLiteCommand("SELECT Id, Nombre, Apellido, Telefono, Cedula, Matricula,Seudonimo FROM Contactos", connection);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -81,7 +80,8 @@ namespace SMSManager.Logica.Servicios
                                 Apellido = reader["Apellido"].ToString() ?? string.Empty,
                                 Telefono = reader["Telefono"].ToString() ?? string.Empty,
                                 Cedula = reader["Cedula"].ToString() ?? string.Empty,
-                                Matricula = reader["Matricula"].ToString() ?? string.Empty
+                                Matricula = reader["Matricula"].ToString() ?? string.Empty,
+                                Seudonimo = reader["Seudonimo"].ToString() ?? string.Empty
 
                             });
                         }
@@ -104,12 +104,13 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula) VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula)", connection);
+                    var command = new SQLiteCommand("INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo) VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo)", connection);
                     command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
                     command.Parameters.AddWithValue("@Apellido", contacto.Apellido);
                     command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
                     command.Parameters.AddWithValue("@Cedula", string.IsNullOrWhiteSpace(contacto.Cedula) ? DBNull.Value : contacto.Cedula);
                     command.Parameters.AddWithValue("@Matricula", string.IsNullOrWhiteSpace(contacto.Matricula) ? DBNull.Value : contacto.Matricula);
+                    command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
 
 
 
@@ -131,13 +132,14 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula = @Matricula WHERE Id = @Id", connection);
+                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula, Seudonimo = @Matricula WHERE Id = @Id", connection);
 
                     command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
                     command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
                     command.Parameters.AddWithValue("@Cedula", contacto.Cedula ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Apellido", contacto.Apellido);
                     command.Parameters.AddWithValue("@Matricula", string.IsNullOrWhiteSpace(contacto.Matricula) ? DBNull.Value : contacto.Matricula);
+                    command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
 
                     command.Parameters.AddWithValue("@Id", contacto.Id);
 
@@ -170,6 +172,25 @@ namespace SMSManager.Logica.Servicios
 
                 Logger.LogError($"Error al eliminar el contacto con ID {id}: {ex.Message} - {ex.StackTrace}");
                 throw new Exception("Error al eliminar el contacto.", ex);
+            }
+        }
+
+        public void EliminarTodosLosContactos() {
+            try
+            {
+                using (var connection = DatabaseManager.ObtenerConexion())
+                {
+                    var command = new SQLiteCommand("DELETE FROM Contactos" , connection);
+
+                    command.ExecuteNonQuery();
+                }
+                Logger.LogInfo($"Todos los Contactos eliminados correctamente.");
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError($"Error al eliminar todos los contactos: {ex.Message} - {ex.StackTrace}");
+                throw new Exception("Error al eliminar todos los contactos .", ex);
             }
         }
 

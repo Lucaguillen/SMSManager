@@ -211,5 +211,43 @@ namespace SMSManager.UI.Forms
         {
 
         }
+
+        private void irAContactosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (this is frmContactos)
+            {
+                return;
+            }
+
+            var contactosForm = new frmContactos();
+            contactosForm.Show();
+            this.Close();
+        }
+
+        private void eLIMINARTODOSLOSCONTACTOSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var resultado = MessageBox.Show(
+            "¿Está seguro de que desea eliminar todos los contactos?",
+            "Confirmación",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Warning);
+
+            if (resultado == DialogResult.Yes)
+            {
+                try
+                {
+                    ContactoService service = new ContactoService();
+                    service.EliminarTodosLosContactos();
+                    CargarContactos();
+
+                    MessageBox.Show("Todos los contactos han sido eliminados correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ocurrió un error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }

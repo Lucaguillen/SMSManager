@@ -42,6 +42,8 @@ public partial class frmEditarContacto : Form
             label1 = new Label();
             txtMatricula = new TextBox();
             label2 = new Label();
+            txtSeudonimo = new TextBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // lblNombre
@@ -94,7 +96,7 @@ public partial class frmEditarContacto : Form
             // 
             // btnGuardar
             // 
-            btnGuardar.Location = new Point(61, 221);
+            btnGuardar.Location = new Point(61, 257);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(75, 23);
             btnGuardar.TabIndex = 6;
@@ -104,7 +106,7 @@ public partial class frmEditarContacto : Form
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(171, 221);
+            btnCancelar.Location = new Point(171, 257);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(81, 23);
             btnCancelar.TabIndex = 7;
@@ -145,11 +147,29 @@ public partial class frmEditarContacto : Form
             label2.Text = "Matricula";
             label2.Click += label2_Click;
             // 
+            // txtSeudonimo
+            // 
+            txtSeudonimo.Location = new Point(150, 211);
+            txtSeudonimo.Name = "txtSeudonimo";
+            txtSeudonimo.Size = new Size(100, 23);
+            txtSeudonimo.TabIndex = 13;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(61, 214);
+            label3.Name = "label3";
+            label3.Size = new Size(68, 15);
+            label3.TabIndex = 12;
+            label3.Text = "Seudonimo";
+            // 
             // frmEditarContacto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(307, 271);
+            ClientSize = new Size(307, 322);
+            Controls.Add(txtSeudonimo);
+            Controls.Add(label3);
             Controls.Add(txtMatricula);
             Controls.Add(label2);
             Controls.Add(txtApellido);
@@ -183,5 +203,7 @@ public partial class frmEditarContacto : Form
         private Label label1;
         private TextBox txtMatricula;
         private Label label2;
+        private TextBox txtSeudonimo;
+        private Label label3;
     }
 }

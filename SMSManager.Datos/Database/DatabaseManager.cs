@@ -39,11 +39,12 @@ namespace SMSManager.Datos.Database
             command.CommandText = @"
                 CREATE TABLE IF NOT EXISTS Contactos (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Nombre TEXT NOT NULL,
+                    Nombre TEXT,
                     Apellido TEXT,
-                    Telefono TEXT NOT NULL UNIQUE,
-                    Cedula TEXT UNIQUE,
-                    Matricula TEXT UNIQUE
+                    Telefono TEXT NOT NULL,
+                    Cedula TEXT,
+                    Matricula TEXT,
+                    Seudonimo TEXT NOT NULL
                 );
 
                 CREATE TABLE IF NOT EXISTS Plantillas (

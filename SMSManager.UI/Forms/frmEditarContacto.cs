@@ -40,6 +40,7 @@ namespace SMSManager.UI.Forms
                 string nuevaMatricula = txtMatricula.Text.Trim();
                 string nuevoApellido = txtApellido.Text.Trim();
                 string nuevoNombre = txtNombre.Text.Trim();
+                string nuevoSeudonimo = txtSeudonimo.Text.Trim();
 
                 // Validar duplicados solo si el usuario cambió el teléfono
                 if (nuevoTelefono != contactoEditar.Telefono && UtilidadesLogica.ExisteTelefono(nuevoTelefono))
@@ -72,13 +73,13 @@ namespace SMSManager.UI.Forms
                 contactoEditar.Telefono = nuevoTelefono;
                 contactoEditar.Cedula = nuevaCedula;
                 contactoEditar.Matricula = nuevaMatricula;
+                contactoEditar.Seudonimo = nuevoSeudonimo;
 
                 // Validaciones obligatorias
-                if (string.IsNullOrWhiteSpace(contactoEditar.Nombre) ||
-                    string.IsNullOrWhiteSpace(contactoEditar.Apellido) ||
+                if (string.IsNullOrWhiteSpace(contactoEditar.Seudonimo) ||
                     string.IsNullOrWhiteSpace(contactoEditar.Telefono))
                 {
-                    MessageBox.Show("Nombre, Apellido y Teléfono son campos obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Seudonimo y Teléfono son campos obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -135,6 +136,7 @@ namespace SMSManager.UI.Forms
                     txtCedula.Text = contactoEditar.Cedula;
                     txtMatricula.Text = contactoEditar.Matricula;
                     txtApellido.Text = contactoEditar.Apellido;
+                    txtSeudonimo.Text = contactoEditar.Seudonimo;
                 }
                 else
                 {

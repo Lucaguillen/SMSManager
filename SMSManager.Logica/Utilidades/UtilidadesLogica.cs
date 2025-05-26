@@ -16,6 +16,13 @@ namespace SMSManager.Logica.Utilidades
             ContactoService service = new ContactoService();
             return service.ObtenerTodos().Any(c => c.Matricula == matricula);
         }
+        public static bool ExisteSeudonimo(string seudo)
+        {
+            if (string.IsNullOrWhiteSpace(seudo)) return false;
+
+            ContactoService service = new ContactoService();
+            return service.ObtenerTodos().Any(c => c.Seudonimo == seudo);
+        }
 
         public static bool ExisteCedula(string cedula)
         {

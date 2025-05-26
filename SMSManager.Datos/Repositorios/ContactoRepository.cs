@@ -19,14 +19,17 @@ namespace SMSManager.Datos.Repositorios
 
             using var command = connection.CreateCommand();
             command.CommandText = @"
-            INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula)
-            VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula);";
+                INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo)
+                VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo);";
+
 
             command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
             command.Parameters.AddWithValue("@Apellido", contacto.Apellido);
             command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
             command.Parameters.AddWithValue("@Cedula", contacto.Cedula);
             command.Parameters.AddWithValue("@Matricula", contacto.Matricula);
+            command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
+
 
             command.ExecuteNonQuery();
         }

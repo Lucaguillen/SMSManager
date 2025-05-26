@@ -41,6 +41,8 @@
             contextMenuStrip2 = new ContextMenuStrip(components);
             menuStrip1 = new MenuStrip();
             contactosToolStripMenuItem = new ToolStripMenuItem();
+            irAContactosToolStripMenuItem = new ToolStripMenuItem();
+            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem = new ToolStripMenuItem();
             mensajesToolStripMenuItem = new ToolStripMenuItem();
             nuevoMensajeToolStripMenuItem = new ToolStripMenuItem();
             nuevoCuerpoDeMensajeToolStripMenuItem = new ToolStripMenuItem();
@@ -153,9 +155,24 @@
             // 
             // contactosToolStripMenuItem
             // 
+            contactosToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { irAContactosToolStripMenuItem, eLIMINARTODOSLOSCONTACTOSToolStripMenuItem });
             contactosToolStripMenuItem.Name = "contactosToolStripMenuItem";
             contactosToolStripMenuItem.Size = new Size(73, 20);
             contactosToolStripMenuItem.Text = "Contactos";
+            // 
+            // irAContactosToolStripMenuItem
+            // 
+            irAContactosToolStripMenuItem.Name = "irAContactosToolStripMenuItem";
+            irAContactosToolStripMenuItem.Size = new Size(261, 22);
+            irAContactosToolStripMenuItem.Text = "Ir a Contactos";
+            irAContactosToolStripMenuItem.Click += irAContactosToolStripMenuItem_Click;
+            // 
+            // eLIMINARTODOSLOSCONTACTOSToolStripMenuItem
+            // 
+            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Name = "eLIMINARTODOSLOSCONTACTOSToolStripMenuItem";
+            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Size = new Size(261, 22);
+            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Text = "ELIMINAR TODOS LOS CONTACTOS";
+            eLIMINARTODOSLOSCONTACTOSToolStripMenuItem.Click += eLIMINARTODOSLOSCONTACTOSToolStripMenuItem_Click;
             // 
             // mensajesToolStripMenuItem
             // 
@@ -167,7 +184,7 @@
             // nuevoMensajeToolStripMenuItem
             // 
             nuevoMensajeToolStripMenuItem.Name = "nuevoMensajeToolStripMenuItem";
-            nuevoMensajeToolStripMenuItem.Size = new Size(214, 22);
+            nuevoMensajeToolStripMenuItem.Size = new Size(157, 22);
             nuevoMensajeToolStripMenuItem.Text = "Nuevo Mensaje";
             // 
             // nuevoCuerpoDeMensajeToolStripMenuItem
@@ -180,7 +197,7 @@
             // verFormatosToolStripMenuItem
             // 
             verFormatosToolStripMenuItem.Name = "verFormatosToolStripMenuItem";
-            verFormatosToolStripMenuItem.Size = new Size(214, 22);
+            verFormatosToolStripMenuItem.Size = new Size(157, 22);
             verFormatosToolStripMenuItem.Text = "Ver Formatos";
             // 
             // configuracionToolStripMenuItem
@@ -234,5 +251,7 @@
         private ToolStripMenuItem nuevoCuerpoDeMensajeToolStripMenuItem;
         private ToolStripMenuItem verFormatosToolStripMenuItem;
         private ToolStripMenuItem configuracionToolStripMenuItem;
+        private ToolStripMenuItem irAContactosToolStripMenuItem;
+        private ToolStripMenuItem eLIMINARTODOSLOSCONTACTOSToolStripMenuItem;
     }
 }

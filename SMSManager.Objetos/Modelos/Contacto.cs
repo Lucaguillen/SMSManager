@@ -10,5 +10,6 @@ namespace SMSManager.Objetos.Modelos
         public string Telefono { get; set; } = string.Empty;
         public string Cedula { get; set; } = string.Empty;
         public string? Matricula { get; set; }
+        public string Seudonimo { get; set; } = string.Empty;
     }
 }

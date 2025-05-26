@@ -40,6 +40,8 @@
             label1 = new Label();
             txtApellido = new TextBox();
             label2 = new Label();
+            txtSeudonimo = new TextBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // lblNombre
@@ -92,7 +94,7 @@
             // 
             // btnGuardar
             // 
-            btnGuardar.Location = new Point(52, 217);
+            btnGuardar.Location = new Point(52, 241);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(75, 23);
             btnGuardar.TabIndex = 6;
@@ -102,7 +104,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(162, 217);
+            btnCancelar.Location = new Point(162, 241);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(81, 23);
             btnCancelar.TabIndex = 7;
@@ -142,11 +144,29 @@
             label2.TabIndex = 10;
             label2.Text = "Apellido";
             // 
+            // txtSeudonimo
+            // 
+            txtSeudonimo.Location = new Point(151, 205);
+            txtSeudonimo.Name = "txtSeudonimo";
+            txtSeudonimo.Size = new Size(100, 23);
+            txtSeudonimo.TabIndex = 13;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(61, 208);
+            label3.Name = "label3";
+            label3.Size = new Size(68, 15);
+            label3.TabIndex = 12;
+            label3.Text = "Seudonimo";
+            // 
             // frmAgregarContacto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(326, 286);
+            Controls.Add(txtSeudonimo);
+            Controls.Add(label3);
             Controls.Add(txtApellido);
             Controls.Add(label2);
             Controls.Add(txtMatricula);
@@ -179,5 +199,7 @@
         private Label label1;
         private TextBox txtApellido;
         private Label label2;
+        private TextBox txtSeudonimo;
+        private Label label3;
     }
 }

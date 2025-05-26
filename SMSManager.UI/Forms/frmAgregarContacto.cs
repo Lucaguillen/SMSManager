@@ -35,19 +35,20 @@ namespace SMSManager.UI.Forms
                     Telefono = txtTelefono.Text.Trim(),
                     Cedula = txtCedula.Text.Trim(),
                     Matricula = txtMatricula.Text.Trim(),
-                    Apellido = txtApellido.Text.Trim()
+                    Apellido = txtApellido.Text.Trim(),
+                    Seudonimo = txtSeudonimo.Text.Trim()
                 };
 
 
-                if (string.IsNullOrWhiteSpace(nuevoContacto.Nombre) || string.IsNullOrWhiteSpace(nuevoContacto.Telefono) || string.IsNullOrEmpty(nuevoContacto.Apellido))
+                if (string.IsNullOrWhiteSpace(nuevoContacto.Seudonimo) || string.IsNullOrWhiteSpace(nuevoContacto.Telefono))
                 {
-                    MessageBox.Show("Todos los campos son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("los campos Telefono y Seudonimo son obligatorios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Todos los campos son obligatorios.");    
                     return;
                 }
 
-                // Validar formato del Nombre
-                if (!ValidadorDeDatos.NombreEsValido(nuevoContacto.Nombre))
+                // Validar formato del Nombre Solo si esta vacio
+                if (!string.IsNullOrWhiteSpace(nuevoContacto.Cedula) && !ValidadorDeDatos.NombreEsValido(nuevoContacto.Nombre))
                 {
                     MessageBox.Show("El Nombre solo puede contener letras y espacios.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Intento de agregar un nombre con formato inválido.");
@@ -90,6 +91,14 @@ namespace SMSManager.UI.Forms
                 {
                     MessageBox.Show("Ya existe un contacto con esa Matricula.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     Logger.LogError("Intento de agregar un contacto con una matricula duplicada.");
+
+                    return;
+                }
+
+                if (UtilidadesLogica.ExisteSeudonimo(nuevoContacto.Seudonimo))
+                {
+                    MessageBox.Show("Ya existe un contacto con ese Seudonimo.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Logger.LogError("Intento de agregar un contacto con un Seudonimo duplicado.");
 
                     return;
                 }
