@@ -41,6 +41,8 @@ namespace SMSManager.UI.Forms
                 string nuevoApellido = txtApellido.Text.Trim();
                 string nuevoNombre = txtNombre.Text.Trim();
                 string nuevoSeudonimo = txtSeudonimo.Text.Trim();
+                string nuevaFecha = txtFecha.Text.Trim();
+                string nuevaHora = txtHora.Text.Trim();
 
                 // Validar duplicados solo si el usuario cambió el teléfono
                 if (nuevoTelefono != contactoEditar.Telefono && UtilidadesLogica.ExisteTelefono(nuevoTelefono))
@@ -79,6 +81,8 @@ namespace SMSManager.UI.Forms
                 contactoEditar.Cedula = nuevaCedula;
                 contactoEditar.Matricula = nuevaMatricula;
                 contactoEditar.Seudonimo = nuevoSeudonimo;
+                contactoEditar.Fecha = nuevaFecha;
+                contactoEditar.Hora = nuevaHora;
 
                 // Validaciones obligatorias
                 if (string.IsNullOrWhiteSpace(contactoEditar.Seudonimo) ||
@@ -142,6 +146,8 @@ namespace SMSManager.UI.Forms
                     txtMatricula.Text = contactoEditar.Matricula;
                     txtApellido.Text = contactoEditar.Apellido;
                     txtSeudonimo.Text = contactoEditar.Seudonimo;
+                    txtHora.Text = contactoEditar.Hora;
+                    txtFecha.Text = contactoEditar.Fecha;
                 }
                 else
                 {

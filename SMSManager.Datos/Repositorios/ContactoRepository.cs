@@ -19,8 +19,8 @@ namespace SMSManager.Datos.Repositorios
 
             using var command = connection.CreateCommand();
             command.CommandText = @"
-                INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo)
-                VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo);";
+                INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo, Fecha, Hora)
+                VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo, @Fecha, @Hora);";
 
 
             command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
@@ -29,6 +29,8 @@ namespace SMSManager.Datos.Repositorios
             command.Parameters.AddWithValue("@Cedula", contacto.Cedula);
             command.Parameters.AddWithValue("@Matricula", contacto.Matricula);
             command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
+            command.Parameters.AddWithValue("@Fecha", contacto.Fecha);
+            command.Parameters.AddWithValue("@Hora", contacto.Hora);
 
 
             command.ExecuteNonQuery();

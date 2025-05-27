@@ -132,7 +132,9 @@ namespace SMSManager.UI.Forms
                 EsSimilar(textoFiltro, c.Telefono) ||
                 EsSimilar(textoFiltro, c.Cedula) ||
                 EsSimilar(textoFiltro, c.Matricula) ||
-                EsSimilar(textoFiltro, c.Seudonimo)
+                EsSimilar(textoFiltro, c.Seudonimo) ||
+                EsSimilar(textoFiltro, c.Fecha) ||
+                EsSimilar(textoFiltro, c.Hora)
             ).ToList();
 
             dgvContactos.DataSource = null;

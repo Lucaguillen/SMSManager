@@ -12,6 +12,10 @@ namespace SMSManager.Objetos.Modelos
         public string? Matricula { get; set; }
         public string Seudonimo { get; set; } = string.Empty;
         public bool Seleccionado { get; set; } = false;
+        public string Fecha { get; set; } = string.Empty;
+        public string Hora { get; set; } = string.Empty;
+
+
 
     }
 }

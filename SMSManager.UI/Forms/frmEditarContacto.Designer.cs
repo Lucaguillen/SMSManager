@@ -44,6 +44,10 @@ public partial class frmEditarContacto : Form
             label2 = new Label();
             txtSeudonimo = new TextBox();
             label3 = new Label();
+            txtFecha = new TextBox();
+            label4 = new Label();
+            txtHora = new TextBox();
+            label5 = new Label();
             SuspendLayout();
             // 
             // lblNombre
@@ -96,7 +100,7 @@ public partial class frmEditarContacto : Form
             // 
             // btnGuardar
             // 
-            btnGuardar.Location = new Point(61, 257);
+            btnGuardar.Location = new Point(59, 327);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(75, 23);
             btnGuardar.TabIndex = 6;
@@ -106,7 +110,7 @@ public partial class frmEditarContacto : Form
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(171, 257);
+            btnCancelar.Location = new Point(169, 327);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(81, 23);
             btnCancelar.TabIndex = 7;
@@ -163,11 +167,47 @@ public partial class frmEditarContacto : Form
             label3.TabIndex = 12;
             label3.Text = "Seudonimo";
             // 
+            // txtFecha
+            // 
+            txtFecha.Location = new Point(150, 250);
+            txtFecha.Name = "txtFecha";
+            txtFecha.Size = new Size(100, 23);
+            txtFecha.TabIndex = 15;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(61, 253);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 15);
+            label4.TabIndex = 14;
+            label4.Text = "Fecha";
+            // 
+            // txtHora
+            // 
+            txtHora.Location = new Point(150, 285);
+            txtHora.Name = "txtHora";
+            txtHora.Size = new Size(100, 23);
+            txtHora.TabIndex = 17;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(61, 288);
+            label5.Name = "label5";
+            label5.Size = new Size(33, 15);
+            label5.TabIndex = 16;
+            label5.Text = "Hora";
+            // 
             // frmEditarContacto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(307, 322);
+            ClientSize = new Size(307, 377);
+            Controls.Add(txtHora);
+            Controls.Add(label5);
+            Controls.Add(txtFecha);
+            Controls.Add(label4);
             Controls.Add(txtSeudonimo);
             Controls.Add(label3);
             Controls.Add(txtMatricula);
@@ -205,5 +245,9 @@ public partial class frmEditarContacto : Form
         private Label label2;
         private TextBox txtSeudonimo;
         private Label label3;
+        private TextBox txtFecha;
+        private Label label4;
+        private TextBox txtHora;
+        private Label label5;
     }
 }

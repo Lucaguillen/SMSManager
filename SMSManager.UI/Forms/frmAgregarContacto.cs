@@ -36,7 +36,9 @@ namespace SMSManager.UI.Forms
                     Cedula = txtCedula.Text.Trim(),
                     Matricula = txtMatricula.Text.Trim(),
                     Apellido = txtApellido.Text.Trim(),
-                    Seudonimo = txtSeudonimo.Text.Trim()
+                    Seudonimo = txtSeudonimo.Text.Trim(),
+                    Fecha = txtFecha.Text.Trim(),
+                    Hora = txtHora.Text.Trim()
                 };
 
 

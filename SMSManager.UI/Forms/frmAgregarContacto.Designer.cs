@@ -42,6 +42,10 @@
             label2 = new Label();
             txtSeudonimo = new TextBox();
             label3 = new Label();
+            txtFecha = new TextBox();
+            label4 = new Label();
+            txtHora = new TextBox();
+            label5 = new Label();
             SuspendLayout();
             // 
             // lblNombre
@@ -94,7 +98,7 @@
             // 
             // btnGuardar
             // 
-            btnGuardar.Location = new Point(52, 241);
+            btnGuardar.Location = new Point(54, 319);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(75, 23);
             btnGuardar.TabIndex = 6;
@@ -104,7 +108,7 @@
             // 
             // btnCancelar
             // 
-            btnCancelar.Location = new Point(162, 241);
+            btnCancelar.Location = new Point(164, 319);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(81, 23);
             btnCancelar.TabIndex = 7;
@@ -160,11 +164,47 @@
             label3.TabIndex = 12;
             label3.Text = "Seudonimo";
             // 
+            // txtFecha
+            // 
+            txtFecha.Location = new Point(151, 239);
+            txtFecha.Name = "txtFecha";
+            txtFecha.Size = new Size(100, 23);
+            txtFecha.TabIndex = 15;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(61, 242);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 15);
+            label4.TabIndex = 14;
+            label4.Text = "Fecha";
+            // 
+            // txtHora
+            // 
+            txtHora.Location = new Point(151, 274);
+            txtHora.Name = "txtHora";
+            txtHora.Size = new Size(100, 23);
+            txtHora.TabIndex = 17;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(61, 277);
+            label5.Name = "label5";
+            label5.Size = new Size(33, 15);
+            label5.TabIndex = 16;
+            label5.Text = "Hora";
+            // 
             // frmAgregarContacto
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(326, 286);
+            ClientSize = new Size(326, 365);
+            Controls.Add(txtHora);
+            Controls.Add(label5);
+            Controls.Add(txtFecha);
+            Controls.Add(label4);
             Controls.Add(txtSeudonimo);
             Controls.Add(label3);
             Controls.Add(txtApellido);
@@ -201,5 +241,9 @@
         private Label label2;
         private TextBox txtSeudonimo;
         private Label label3;
+        private TextBox txtFecha;
+        private Label label4;
+        private TextBox txtHora;
+        private Label label5;
     }
 }

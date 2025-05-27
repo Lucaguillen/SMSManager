@@ -68,7 +68,7 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("SELECT Id, Nombre, Apellido, Telefono, Cedula, Matricula,Seudonimo FROM Contactos", connection);
+                    var command = new SQLiteCommand("SELECT Id, Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo, Fecha, Hora FROM Contactos", connection);
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -81,7 +81,9 @@ namespace SMSManager.Logica.Servicios
                                 Telefono = reader["Telefono"].ToString() ?? string.Empty,
                                 Cedula = reader["Cedula"].ToString() ?? string.Empty,
                                 Matricula = reader["Matricula"].ToString() ?? string.Empty,
-                                Seudonimo = reader["Seudonimo"].ToString() ?? string.Empty
+                                Seudonimo = reader["Seudonimo"].ToString() ?? string.Empty,
+                                Fecha = reader["Fecha"].ToString() ?? string.Empty,
+                                Hora = reader["Hora"].ToString() ?? string.Empty
 
                             });
                         }
@@ -104,13 +106,15 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo) VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo)", connection);
+                    var command = new SQLiteCommand("INSERT INTO Contactos (Nombre, Apellido, Telefono, Cedula, Matricula, Seudonimo, Fecha, Hora) VALUES (@Nombre, @Apellido, @Telefono, @Cedula, @Matricula, @Seudonimo, @Fecha, @Hora)", connection);
                     command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
                     command.Parameters.AddWithValue("@Apellido", contacto.Apellido);
                     command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
                     command.Parameters.AddWithValue("@Cedula", string.IsNullOrWhiteSpace(contacto.Cedula) ? DBNull.Value : contacto.Cedula);
                     command.Parameters.AddWithValue("@Matricula", string.IsNullOrWhiteSpace(contacto.Matricula) ? DBNull.Value : contacto.Matricula);
                     command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
+                    command.Parameters.AddWithValue("@Fecha", contacto.Fecha);
+                    command.Parameters.AddWithValue("@Hora", contacto.Hora);
 
 
 
@@ -132,7 +136,7 @@ namespace SMSManager.Logica.Servicios
             {
                 using (var connection = DatabaseManager.ObtenerConexion())
                 {
-                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula = @Matricula, Seudonimo = @Seudonimo WHERE Id = @Id", connection);
+                    var command = new SQLiteCommand("UPDATE Contactos SET Nombre = @Nombre, Apellido = @Apellido, Telefono = @Telefono, Cedula = @Cedula, Matricula = @Matricula, Seudonimo = @Seudonimo, Fecha = @Fecha, Hora = @Hora WHERE Id = @Id", connection);
 
                     command.Parameters.AddWithValue("@Nombre", contacto.Nombre);
                     command.Parameters.AddWithValue("@Telefono", contacto.Telefono);
@@ -140,6 +144,8 @@ namespace SMSManager.Logica.Servicios
                     command.Parameters.AddWithValue("@Apellido", contacto.Apellido);
                     command.Parameters.AddWithValue("@Matricula", string.IsNullOrWhiteSpace(contacto.Matricula) ? DBNull.Value : contacto.Matricula);
                     command.Parameters.AddWithValue("@Seudonimo", contacto.Seudonimo);
+                    command.Parameters.AddWithValue("@Fecha", contacto.Fecha);
+                    command.Parameters.AddWithValue("@Hora", contacto.Hora);
 
                     command.Parameters.AddWithValue("@Id", contacto.Id);
 
