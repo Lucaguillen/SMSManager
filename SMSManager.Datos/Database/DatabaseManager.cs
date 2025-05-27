@@ -44,7 +44,9 @@ namespace SMSManager.Datos.Database
                     Telefono TEXT NOT NULL,
                     Cedula TEXT,
                     Matricula TEXT,
-                    Seudonimo TEXT NOT NULL
+                    Seudonimo TEXT NOT NULL,
+                    Fecha TEXT,
+                    Hora TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS Formatos (

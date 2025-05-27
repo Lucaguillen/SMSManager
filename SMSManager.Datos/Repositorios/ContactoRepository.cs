@@ -50,6 +50,10 @@ namespace SMSManager.Datos.Repositorios
         {
             return ExisteCampo("Matricula", matricula);
         }
+        public bool ExisteSeudonimo(string seudonimo)
+        {
+            return ExisteCampo("Seudonimo", seudonimo);
+        }
 
         private  bool ExisteCampo(string campo, string valor)
         {

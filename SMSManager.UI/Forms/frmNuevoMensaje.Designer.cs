@@ -56,6 +56,7 @@
             btnContinuar.TabIndex = 2;
             btnContinuar.Text = "Continuar";
             btnContinuar.UseVisualStyleBackColor = true;
+            btnContinuar.Click += btnContinuar_Click;
             // 
             // btnSeleccionarTodos
             // 

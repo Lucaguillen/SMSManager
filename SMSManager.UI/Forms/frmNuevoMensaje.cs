@@ -97,6 +97,8 @@ namespace SMSManager.UI.Forms
             dgvContactos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Apellido", HeaderText = "Apellido" });
             dgvContactos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Matricula", HeaderText = "Matrícula" });
             dgvContactos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Cedula", HeaderText = "Cédula" });
+            dgvContactos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Fecha", HeaderText = "Fecha" });
+            dgvContactos.Columns.Add(new DataGridViewTextBoxColumn { DataPropertyName = "Hora", HeaderText = "Hora" });
 
 
             dgvContactos.DataSource = listaOriginal;
@@ -157,8 +159,45 @@ namespace SMSManager.UI.Forms
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            txtBuscar.Text = string.Empty; 
+            txtBuscar.Text = string.Empty;
             BuscarContactos();
         }
+        private List<Contacto> ObtenerContactosSeleccionados()
+        {
+            return listaOriginal
+                .Where(c => c.Seleccionado)
+                .ToList();
+        }
+        private void btnContinuar_Click(object sender, EventArgs e)
+        {
+            var contactosSeleccionados = ObtenerContactosSeleccionados();
+
+            if (contactosSeleccionados == null || contactosSeleccionados.Count == 0)
+            {
+                MessageBox.Show("Debe seleccionar al menos un contacto para continuar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var existente = Application.OpenForms.OfType<frmConfirmarEnvio>().FirstOrDefault();
+
+            if (existente != null)
+            {
+                existente.Focus();
+                existente.Activate();
+            }
+            else
+            {
+                var frm = new frmConfirmarEnvio(contactosSeleccionados);
+                frm.FormClosed += (s, args) =>
+                {
+                    if (Application.OpenForms.Count == 0)
+                        Application.Exit();
+                };
+                frm.Show();
+            }
+
+            this.Hide();
+        }
+
     }
 }

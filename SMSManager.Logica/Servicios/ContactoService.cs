@@ -32,11 +32,34 @@ namespace SMSManager.Logica.Servicios
                     resultado.Errores.Add($"Contacto inválido: {contacto.Nombre} {contacto.Apellido} (faltan campos obligatorios)");
                     continue;
                 }
+                if (!EsTelefonoValido(contacto)) {
+                    resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Contacto inválido: {contacto.Nombre} {contacto.Apellido} (El numero de telefono debe tener exactamente 9 digitos)");
+                    continue;
+                }
 
-                if (YaExiste(contacto))
+                if (YaExisteMat(contacto))
                 {
                     resultado.ContactosFallidos++;
-                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (cédula, teléfono, matrícula o Seudonimo ya existe)");
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (Matricula ya existe)");
+                    continue;
+                }
+                if (YaExisteCedula(contacto))
+                {
+                    resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (cédula ya existe)");
+                    continue;
+                }
+                if (YaExisteTel(contacto))
+                {
+                    resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (teléfono ya existe)");
+                    continue;
+                }
+                if (YaExisteSeu(contacto))
+                {
+                    resultado.ContactosFallidos++;
+                    resultado.Errores.Add($"Duplicado: {contacto.Nombre} {contacto.Apellido} (Seudonimo ya existe)");
                     continue;
                 }
 
@@ -52,12 +75,30 @@ namespace SMSManager.Logica.Servicios
             return !string.IsNullOrWhiteSpace(contacto.Seudonimo) &&
                    !string.IsNullOrWhiteSpace(contacto.Telefono);
         }
-
-        private bool YaExiste(Contacto contacto)
+        private bool EsTelefonoValido(Contacto contacto)
         {
-            return contactoRepository.ExisteCedula(contacto.Cedula) ||
-                   contactoRepository.ExisteTelefono(contacto.Telefono) ||
-                   contactoRepository.ExisteMatricula(contacto.Matricula);
+            return contacto.Telefono.All(char.IsDigit) &&
+                   contacto.Telefono.Length == 9;
+        }
+         
+                   
+
+        private bool YaExisteCedula(Contacto contacto)
+        {
+            return contactoRepository.ExisteCedula(contacto.Cedula);
+        }
+        private bool YaExisteTel(Contacto contacto)
+        {
+            return contactoRepository.ExisteTelefono(contacto.Telefono);
+
+        }
+        private bool YaExisteMat(Contacto contacto)
+        {
+            return contactoRepository.ExisteMatricula(contacto.Matricula);
+        }
+        private bool YaExisteSeu(Contacto contacto)
+        {
+            return contactoRepository.ExisteSeudonimo(contacto.Seudonimo);
         }
 
         public List<Contacto> ObtenerTodos()
