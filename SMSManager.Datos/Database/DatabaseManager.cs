@@ -49,6 +49,15 @@ namespace SMSManager.Datos.Database
                     Hora TEXT
                 );
 
+                CREATE TABLE IF NOT EXISTS MensajesEnviados (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Telefono TEXT,
+                    Seudonimo TEXT,
+                    Contenido TEXT,
+                    Estado TEXT,
+                    FechaHora TEXT
+                );
+
                 CREATE TABLE IF NOT EXISTS Formatos (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     Nombre TEXT NOT NULL UNIQUE,

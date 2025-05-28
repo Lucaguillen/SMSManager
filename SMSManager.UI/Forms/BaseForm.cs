@@ -141,7 +141,14 @@ namespace SMSManager.UI
             var verFormatos = new ToolStripMenuItem("Ver Formatos");
             verFormatos.Click += (s, e) => NavegarAVerFormatos();
 
+            var verHistorial = new ToolStripMenuItem("Historial");
+            verHistorial.Click += (s, e) =>
+            {
+                using var frm = new Forms.frmHistorial();
+                frm.ShowDialog();
+            };
 
+            mensajesMenu.DropDownItems.Add(verHistorial);
             mensajesMenu.DropDownItems.Add(nuevoMensaje);
             mensajesMenu.DropDownItems.Add(nuevoFormato);
             mensajesMenu.DropDownItems.Add(verFormatos);
@@ -151,7 +158,8 @@ namespace SMSManager.UI
             var configurarApi = new ToolStripMenuItem("Configurar API");
             configurarApi.Click += (s, e) =>
             {
-                MessageBox.Show("Configuración de API próximamente.", "Configuración", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using var frm = new Forms.frmConfiguracionApi();
+                frm.ShowDialog();
             };
             configuracionMenu.DropDownItems.Add(configurarApi);
 

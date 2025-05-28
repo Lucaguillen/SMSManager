@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SMSManager.Datos.Repositorios;
 using SMSManager.Logica.Servicios;
 using SMSManager.Objetos.Modelos;
 
@@ -28,6 +29,61 @@ namespace SMSManager.UI.Forms
 
 
         }
+
+        private async Task<bool> EnviarMensajeAsync(string numero, string mensaje)
+        {
+            try
+            {
+                var config = ConfiguracionService.Cargar();
+
+                if (string.IsNullOrWhiteSpace(config.IP) ||
+                    string.IsNullOrWhiteSpace(config.Puerto) ||
+                    string.IsNullOrWhiteSpace(config.Token))
+                {
+                    MessageBox.Show("La configuración de API está incompleta. Por favor, revise los datos en 'Configurar API'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                // Asegurarse de que el número esté en formato internacional
+                if (!numero.StartsWith("+"))
+                {
+                    numero = "+598" + numero.TrimStart('0'); // Remueve el 0 inicial si es necesario
+                }
+
+                string url = $"http://{config.IP}:{config.Puerto}/";
+                var json = $"{{\"to\": \"{numero}\", \"message\": \"{mensaje}\"}}";
+
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(config.Token);
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(url, content);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"❌ Error al enviar SMS: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void RegistrarEnHistorial(string telefono, string seudonimo, string mensaje, string estado)
+        {
+            var historialRepo = new MensajeEnviadoRepository();
+
+            var registro = new MensajeEnviado
+            {
+                Telefono = telefono,
+                Seudonimo = seudonimo,
+                Contenido = mensaje,
+                Estado = estado,
+                FechaHora = DateTime.Now
+            };
+
+            historialRepo.Insertar(registro);
+        }
+
         private void frmConfirmarEnvio_Load(object sender, EventArgs e)
         {
             CargarFormatos();
@@ -242,6 +298,120 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            if (cmbFormato.SelectedItem is not Formato formatoSeleccionado)
+            {
+                MessageBox.Show("Debe seleccionar un formato antes de enviar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string textoBase = formatoSeleccionado.Cuerpo;
+
+            foreach (DataGridViewRow fila in dgvDestinatarios.Rows)
+            {
+                bool enviar = fila.Cells["Enviar"]?.Value as bool? ?? false;
+                if (!enviar) continue;
+
+                try
+                {
+                    string telefono = fila.Cells["Telefono"].Value?.ToString() ?? "";
+                    string mensaje = textoBase;
+
+                    // Recolectar valores para reemplazo
+                    var reemplazos = new Dictionary<string, string>();
+                    foreach (DataGridViewCell celda in fila.Cells)
+                    {
+                        string nombreCol = celda.OwningColumn.Name;
+                        if (!string.IsNullOrWhiteSpace(nombreCol) && celda.Value != null)
+                        {
+                            reemplazos[nombreCol] = celda.Value.ToString();
+                        }
+                    }
+
+                    // Reemplazar placeholders en el texto
+                    foreach (var kv in reemplazos)
+                    {
+                        mensaje = mensaje.Replace($"{{{kv.Key}}}", kv.Value);
+                    }
+
+                    bool exito = await EnviarMensajeAsync(telefono, mensaje);
+                    string estado = exito ? "Enviado" : "Error";
+                    fila.Cells["Estado"].Value = estado;
+
+                    // Registrar en historial
+                    RegistrarEnHistorial(
+                        telefono,
+                        reemplazos.GetValueOrDefault("Seudonimo", ""),
+                        mensaje,
+                        estado
+                    );
+                }
+                catch
+                {
+                    fila.Cells["Estado"].Value = "Error";
+                }
+            }
+
+            MessageBox.Show("Proceso de envío finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private async void btnEnviarTodos_Click(object sender, EventArgs e)
+        {
+            if (cmbFormato.SelectedItem is not Formato formatoSeleccionado)
+            {
+                MessageBox.Show("Debe seleccionar un formato antes de enviar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string textoBase = formatoSeleccionado.Cuerpo;
+
+            foreach (DataGridViewRow fila in dgvDestinatarios.Rows)
+            {
+                try
+                {
+                    string telefono = fila.Cells["Telefono"].Value?.ToString() ?? "";
+                    string mensaje = textoBase;
+
+                    // Recolectar valores para reemplazo
+                    var reemplazos = new Dictionary<string, string>();
+                    foreach (DataGridViewCell celda in fila.Cells)
+                    {
+                        string nombreCol = celda.OwningColumn.Name;
+                        if (!string.IsNullOrWhiteSpace(nombreCol) && celda.Value != null)
+                        {
+                            reemplazos[nombreCol] = celda.Value.ToString();
+                        }
+                    }
+
+                    // Reemplazar placeholders en el texto
+                    foreach (var kv in reemplazos)
+                    {
+                        mensaje = mensaje.Replace($"{{{kv.Key}}}", kv.Value);
+                    }
+
+                    bool exito = await EnviarMensajeAsync(telefono, mensaje);
+                    string estado = exito ? "Enviado" : "Error";
+                    fila.Cells["Estado"].Value = estado;
+
+                    RegistrarEnHistorial(
+                        telefono,
+                        reemplazos.GetValueOrDefault("Seudonimo", ""),
+                        mensaje,
+                        estado
+                    );
+                }
+                catch
+                {
+                    fila.Cells["Estado"].Value = "Error";
+                }
+            }
+
+            MessageBox.Show("Proceso de envío finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
     }
+
 
 }

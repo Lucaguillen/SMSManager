@@ -82,6 +82,7 @@
             btnEnviarTodos.TabIndex = 4;
             btnEnviarTodos.Text = "Enviar a Todos";
             btnEnviarTodos.UseVisualStyleBackColor = true;
+            btnEnviarTodos.Click += btnEnviarTodos_Click;
             // 
             // button2
             // 
@@ -91,6 +92,7 @@
             button2.TabIndex = 5;
             button2.Text = "Enviar a Seleccionados";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
