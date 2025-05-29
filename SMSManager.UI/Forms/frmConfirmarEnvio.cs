@@ -322,17 +322,35 @@ namespace SMSManager.UI.Forms
 
             string textoBase = formatoSeleccionado.Cuerpo;
 
-            foreach (DataGridViewRow fila in dgvDestinatarios.Rows)
+            // Filtrar filas que tengan "Enviar" = true
+            var filasParaEnviar = dgvDestinatarios.Rows
+                .Cast<DataGridViewRow>()
+                .Where(f => f.Cells["Enviar"]?.Value as bool? == true)
+                .ToList();
+
+            int loteActual = 1;
+            int totalLotes = (int)Math.Ceiling(filasParaEnviar.Count / 20.0);
+
+            progressBarEnvio.Maximum = filasParaEnviar.Count;
+            progressBarEnvio.Value = 0;
+
+            DateTime inicio = DateTime.Now;
+
+            for (int i = 0; i < filasParaEnviar.Count; i++)
             {
-                bool enviar = fila.Cells["Enviar"]?.Value as bool? ?? false;
-                if (!enviar) continue;
+                if (i > 0 && i % 20 == 0)
+                {
+                    loteActual++;
+                    await Task.Delay(10000); // 10 segundos entre lotes
+                }
+
+                var fila = filasParaEnviar[i];
 
                 try
                 {
                     string telefono = fila.Cells["Telefono"].Value?.ToString() ?? "";
                     string mensaje = textoBase;
 
-                    // Recolectar valores para reemplazo
                     var reemplazos = new Dictionary<string, string>();
                     foreach (DataGridViewCell celda in fila.Cells)
                     {
@@ -343,7 +361,6 @@ namespace SMSManager.UI.Forms
                         }
                     }
 
-                    // Reemplazar placeholders en el texto
                     foreach (var kv in reemplazos)
                     {
                         mensaje = mensaje.Replace($"{{{kv.Key}}}", kv.Value);
@@ -353,31 +370,36 @@ namespace SMSManager.UI.Forms
                     string estado = exito ? "Enviado" : "Error";
                     fila.Cells["Estado"].Value = estado;
 
-                    // Registrar en historial
+                    progressBarEnvio.Value = i + 1;
+
+                    TimeSpan transcurrido = DateTime.Now - inicio;
+                    int restantes = filasParaEnviar.Count - (i + 1);
+                    TimeSpan estimadoTotal = TimeSpan.FromSeconds(filasParaEnviar.Count * 3 + (totalLotes - 1) * 10);
+                    TimeSpan restante = estimadoTotal - transcurrido;
+
+                    lblProgreso.Text = $"Lote {loteActual}/{totalLotes} - " +
+                                       $"Mensaje {i + 1}/{filasParaEnviar.Count} - " +
+                                       $"Tiempo: {transcurrido:mm\\:ss} / {estimadoTotal:mm\\:ss}";
+
+
                     RegistrarEnHistorial(
                         telefono,
                         reemplazos.GetValueOrDefault("Seudonimo", ""),
                         mensaje,
                         estado
                     );
-
-                    if (chkActivarRetardo.Checked)
-                    {
-                        if (int.TryParse(txtSegundosRetardo.Text, out int segundos) && segundos > 0)
-                        {
-                            await Task.Delay(segundos * 1000);
-                        }
-                    }
-
                 }
                 catch
                 {
                     fila.Cells["Estado"].Value = "Error";
                 }
+
+                await Task.Delay(3000); // 3 segundos entre mensajes
             }
 
             MessageBox.Show("Proceso de envío finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
 
         private async void btnEnviarTodos_Click(object sender, EventArgs e)
@@ -390,14 +412,35 @@ namespace SMSManager.UI.Forms
 
             string textoBase = formatoSeleccionado.Cuerpo;
 
-            foreach (DataGridViewRow fila in dgvDestinatarios.Rows)
+            // Filtrar filas válidas para enviar
+            var filasParaEnviar = dgvDestinatarios.Rows
+                .Cast<DataGridViewRow>()
+                .Where(f => f.Cells["Telefono"].Value != null && !string.IsNullOrWhiteSpace(f.Cells["Telefono"].Value.ToString()))
+                .ToList();
+
+            int loteActual = 1;
+            int totalLotes = (int)Math.Ceiling(filasParaEnviar.Count / 20.0);
+
+            progressBarEnvio.Maximum = filasParaEnviar.Count;
+            progressBarEnvio.Value = 0;
+
+            DateTime inicio = DateTime.Now;
+
+            for (int i = 0; i < filasParaEnviar.Count; i++)
             {
+                if (i > 0 && i % 20 == 0)
+                {
+                    loteActual++;
+                    await Task.Delay(10000); // 10 segundos entre lotes
+                }
+
+                var fila = filasParaEnviar[i];
+
                 try
                 {
                     string telefono = fila.Cells["Telefono"].Value?.ToString() ?? "";
                     string mensaje = textoBase;
 
-                    // Recolectar valores para reemplazo
                     var reemplazos = new Dictionary<string, string>();
                     foreach (DataGridViewCell celda in fila.Cells)
                     {
@@ -408,7 +451,6 @@ namespace SMSManager.UI.Forms
                         }
                     }
 
-                    // Reemplazar placeholders en el texto
                     foreach (var kv in reemplazos)
                     {
                         mensaje = mensaje.Replace($"{{{kv.Key}}}", kv.Value);
@@ -418,32 +460,36 @@ namespace SMSManager.UI.Forms
                     string estado = exito ? "Enviado" : "Error";
                     fila.Cells["Estado"].Value = estado;
 
+                    progressBarEnvio.Value = i + 1;
+
+                    TimeSpan transcurrido = DateTime.Now - inicio;
+                    int restantes = filasParaEnviar.Count - (i + 1);
+                    TimeSpan estimadoTotal = TimeSpan.FromSeconds(filasParaEnviar.Count * 3 + (totalLotes - 1) * 10);
+                    TimeSpan restante = estimadoTotal - transcurrido;
+
+                    lblProgreso.Text = $"Lote {loteActual}/{totalLotes} - " +
+                                       $"Mensaje {i + 1}/{filasParaEnviar.Count} - " +
+                                       $"Tiempo: {transcurrido:mm\\:ss} / {estimadoTotal:mm\\:ss}";
+
+
                     RegistrarEnHistorial(
                         telefono,
                         reemplazos.GetValueOrDefault("Seudonimo", ""),
                         mensaje,
                         estado
                     );
-                    if (chkActivarRetardo.Checked)
-                    {
-                        if (int.TryParse(txtSegundosRetardo.Text, out int segundos) && segundos > 0)
-                        {
-                            await Task.Delay(segundos * 1000);
-                        }
-                    }
-
                 }
                 catch
                 {
                     fila.Cells["Estado"].Value = "Error";
                 }
+
+                await Task.Delay(3000); // 3 segundos entre mensajes
             }
 
             MessageBox.Show("Proceso de envío finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-
     }
-
 
 }

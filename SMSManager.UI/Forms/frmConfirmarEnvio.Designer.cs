@@ -36,9 +36,8 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
-            chkActivarRetardo = new CheckBox();
-            txtSegundosRetardo = new TextBox();
-            label2 = new Label();
+            progressBarEnvio = new ProgressBar();
+            lblProgreso = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvDestinatarios).BeginInit();
             SuspendLayout();
             // 
@@ -70,7 +69,7 @@
             // 
             // txtVistaPrevia
             // 
-            txtVistaPrevia.Location = new Point(12, 404);
+            txtVistaPrevia.Location = new Point(12, 444);
             txtVistaPrevia.Multiline = true;
             txtVistaPrevia.Name = "txtVistaPrevia";
             txtVistaPrevia.ReadOnly = true;
@@ -79,7 +78,7 @@
             // 
             // btnEnviarTodos
             // 
-            btnEnviarTodos.Location = new Point(630, 404);
+            btnEnviarTodos.Location = new Point(630, 444);
             btnEnviarTodos.Name = "btnEnviarTodos";
             btnEnviarTodos.Size = new Size(149, 23);
             btnEnviarTodos.TabIndex = 4;
@@ -89,7 +88,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(630, 433);
+            button2.Location = new Point(630, 473);
             button2.Name = "button2";
             button2.Size = new Size(149, 23);
             button2.TabIndex = 5;
@@ -99,7 +98,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(630, 491);
+            button3.Location = new Point(630, 531);
             button3.Name = "button3";
             button3.Size = new Size(149, 23);
             button3.TabIndex = 6;
@@ -109,7 +108,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(630, 462);
+            button4.Location = new Point(630, 502);
             button4.Name = "button4";
             button4.Size = new Size(149, 23);
             button4.TabIndex = 7;
@@ -117,40 +116,31 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
-            // chkActivarRetardo
+            // progressBarEnvio
             // 
-            chkActivarRetardo.AutoSize = true;
-            chkActivarRetardo.Location = new Point(672, 9);
-            chkActivarRetardo.Name = "chkActivarRetardo";
-            chkActivarRetardo.Size = new Size(107, 19);
-            chkActivarRetardo.TabIndex = 8;
-            chkActivarRetardo.Text = "Activar Retardo";
-            chkActivarRetardo.UseVisualStyleBackColor = true;
+            progressBarEnvio.Location = new Point(12, 402);
+            progressBarEnvio.Name = "progressBarEnvio";
+            progressBarEnvio.Size = new Size(767, 23);
+            progressBarEnvio.Style = ProgressBarStyle.Continuous;
+            progressBarEnvio.TabIndex = 8;
+            progressBarEnvio.Tag = "";
             // 
-            // txtSegundosRetardo
+            // lblProgreso
             // 
-            txtSegundosRetardo.Location = new Point(630, 7);
-            txtSegundosRetardo.Name = "txtSegundosRetardo";
-            txtSegundosRetardo.Size = new Size(36, 23);
-            txtSegundosRetardo.TabIndex = 9;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(562, 11);
-            label2.Name = "label2";
-            label2.Size = new Size(62, 15);
-            label2.TabIndex = 10;
-            label2.Text = "Segundos:";
+            lblProgreso.AutoSize = true;
+            lblProgreso.Location = new Point(257, 428);
+            lblProgreso.Name = "lblProgreso";
+            lblProgreso.Size = new Size(247, 15);
+            lblProgreso.TabIndex = 9;
+            lblProgreso.Text = "Lote 0/0 - Mensaje 0/0 - Tiempo: 00:00 / 00:00";
             // 
             // frmConfirmarEnvio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(786, 521);
-            Controls.Add(label2);
-            Controls.Add(txtSegundosRetardo);
-            Controls.Add(chkActivarRetardo);
+            ClientSize = new Size(786, 558);
+            Controls.Add(lblProgreso);
+            Controls.Add(progressBarEnvio);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -176,8 +166,7 @@
         private Button button2;
         private Button button3;
         private Button button4;
-        private CheckBox chkActivarRetardo;
-        private TextBox txtSegundosRetardo;
-        private Label label2;
+        private ProgressBar progressBarEnvio;
+        private Label lblProgreso;
     }
 }
