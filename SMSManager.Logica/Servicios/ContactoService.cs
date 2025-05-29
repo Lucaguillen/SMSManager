@@ -32,7 +32,8 @@ namespace SMSManager.Logica.Servicios
                     resultado.Errores.Add($"Contacto inválido: {contacto.Nombre} {contacto.Apellido} (faltan campos obligatorios)");
                     continue;
                 }
-                if (!EsTelefonoValido(contacto)) {
+                if (!EsTelefonoValido(contacto))
+                {
                     resultado.ContactosFallidos++;
                     resultado.Errores.Add($"Contacto inválido: {contacto.Nombre} {contacto.Apellido} (El numero de telefono debe tener exactamente 9 digitos)");
                     continue;

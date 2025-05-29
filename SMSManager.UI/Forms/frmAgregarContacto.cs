@@ -74,7 +74,7 @@ namespace SMSManager.UI.Forms
                 }
 
 
-                // Validar duplicados
+                 //Validar duplicados
                 if (UtilidadesLogica.ExisteTelefono(nuevoContacto.Telefono))
                 {
                     MessageBox.Show("Ya existe un contacto con ese número de teléfono.", "Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);

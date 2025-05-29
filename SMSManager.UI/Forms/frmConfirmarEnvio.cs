@@ -62,7 +62,7 @@ namespace SMSManager.UI.Forms
 
                 string responseText = await response.Content.ReadAsStringAsync();
 
-                if (response.IsSuccessStatusCode && responseText.Contains("Message sent", StringComparison.OrdinalIgnoreCase))
+                if (response.IsSuccessStatusCode)
                 {
                     Logger.LogInfo($"SMS enviado correctamente a {numero}. Respuesta: {responseText}");
                     return true;
