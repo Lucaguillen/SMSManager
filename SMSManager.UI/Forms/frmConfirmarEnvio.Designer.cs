@@ -36,6 +36,9 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
+            chkActivarRetardo = new CheckBox();
+            txtSegundosRetardo = new TextBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvDestinatarios).BeginInit();
             SuspendLayout();
             // 
@@ -114,11 +117,40 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
+            // chkActivarRetardo
+            // 
+            chkActivarRetardo.AutoSize = true;
+            chkActivarRetardo.Location = new Point(672, 9);
+            chkActivarRetardo.Name = "chkActivarRetardo";
+            chkActivarRetardo.Size = new Size(107, 19);
+            chkActivarRetardo.TabIndex = 8;
+            chkActivarRetardo.Text = "Activar Retardo";
+            chkActivarRetardo.UseVisualStyleBackColor = true;
+            // 
+            // txtSegundosRetardo
+            // 
+            txtSegundosRetardo.Location = new Point(630, 7);
+            txtSegundosRetardo.Name = "txtSegundosRetardo";
+            txtSegundosRetardo.Size = new Size(36, 23);
+            txtSegundosRetardo.TabIndex = 9;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(562, 11);
+            label2.Name = "label2";
+            label2.Size = new Size(62, 15);
+            label2.TabIndex = 10;
+            label2.Text = "Segundos:";
+            // 
             // frmConfirmarEnvio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(786, 521);
+            Controls.Add(label2);
+            Controls.Add(txtSegundosRetardo);
+            Controls.Add(chkActivarRetardo);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -144,5 +176,8 @@
         private Button button2;
         private Button button3;
         private Button button4;
+        private CheckBox chkActivarRetardo;
+        private TextBox txtSegundosRetardo;
+        private Label label2;
     }
 }

@@ -148,8 +148,9 @@ namespace SMSManager.UI
                 frm.ShowDialog();
             };
 
-            mensajesMenu.DropDownItems.Add(verHistorial);
+            
             mensajesMenu.DropDownItems.Add(nuevoMensaje);
+            mensajesMenu.DropDownItems.Add(verHistorial);
             mensajesMenu.DropDownItems.Add(nuevoFormato);
             mensajesMenu.DropDownItems.Add(verFormatos);
 

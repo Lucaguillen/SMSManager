@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SMSManager.Datos.Repositorios;
 using SMSManager.Logica.Servicios;
 using SMSManager.Objetos.Modelos;
+using SMSManager.Utilidades.Logging;
 
 namespace SMSManager.UI.Forms
 {
@@ -41,13 +42,13 @@ namespace SMSManager.UI.Forms
                     string.IsNullOrWhiteSpace(config.Token))
                 {
                     MessageBox.Show("La configuración de API está incompleta. Por favor, revise los datos en 'Configurar API'.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    SMSManager.Utilidades.Logging.Logger.LogError("Configuración de API incompleta.");
                     return false;
                 }
 
-                // Asegurarse de que el número esté en formato internacional
                 if (!numero.StartsWith("+"))
                 {
-                    numero = "+598" + numero.TrimStart('0'); // Remueve el 0 inicial si es necesario
+                    numero = "+598" + numero.TrimStart('0');
                 }
 
                 string url = $"http://{config.IP}:{config.Puerto}/";
@@ -59,14 +60,27 @@ namespace SMSManager.UI.Forms
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(url, content);
 
-                return response.IsSuccessStatusCode;
+                string responseText = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode && responseText.Contains("Message sent", StringComparison.OrdinalIgnoreCase))
+                {
+                    Logger.LogInfo($"SMS enviado correctamente a {numero}. Respuesta: {responseText}");
+                    return true;
+                }
+                else
+                {
+                    Logger.LogError($"Fallo al enviar SMS a {numero}. Respuesta: {responseText}");
+                    return false;
+                }
             }
             catch (Exception ex)
             {
+                Logger.LogError($"Excepción al enviar SMS a {numero}: {ex.Message}");
                 MessageBox.Show($"❌ Error al enviar SMS: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
+
 
         private void RegistrarEnHistorial(string telefono, string seudonimo, string mensaje, string estado)
         {
@@ -346,6 +360,15 @@ namespace SMSManager.UI.Forms
                         mensaje,
                         estado
                     );
+
+                    if (chkActivarRetardo.Checked)
+                    {
+                        if (int.TryParse(txtSegundosRetardo.Text, out int segundos) && segundos > 0)
+                        {
+                            await Task.Delay(segundos * 1000);
+                        }
+                    }
+
                 }
                 catch
                 {
@@ -401,6 +424,14 @@ namespace SMSManager.UI.Forms
                         mensaje,
                         estado
                     );
+                    if (chkActivarRetardo.Checked)
+                    {
+                        if (int.TryParse(txtSegundosRetardo.Text, out int segundos) && segundos > 0)
+                        {
+                            await Task.Delay(segundos * 1000);
+                        }
+                    }
+
                 }
                 catch
                 {
@@ -410,6 +441,7 @@ namespace SMSManager.UI.Forms
 
             MessageBox.Show("Proceso de envío finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
 
     }
 
