@@ -107,3 +107,19 @@ Activamente mantenido. Utilizado en producción en ambientes reales.
 ## ✨ Licencia
 
 Este proyecto se distribuye bajo la licencia **MIT**. Puedes utilizarlo, modificarlo y redistribuirlo libremente con atribución.
+
+---
+
+## 🖼️ Capturas de pantalla
+
+### Gestión de Contactos
+![Gestión de Contactos](screenshots/menu_contactos.png)
+
+### Visualización y edición de formatos
+![Ver Formatos](screenshots/menu_ver_formatos.png)
+
+### Redacción de mensaje masivo
+![Nuevo Mensaje](screenshots/menu_nuevo_mensaje.png)
+
+### Confirmación del envío con vista previa personalizada
+![Confirmar Envío](screenshots/enviar_mensaje.png)
