@@ -113,13 +113,13 @@ Este proyecto se distribuye bajo la licencia **MIT**. Puedes utilizarlo, modific
 ## 🖼️ Capturas de pantalla
 
 ### Gestión de Contactos
-![Gestión de Contactos](screenshots/menu_contactos.png)
+![Gestión de Contactos](screenshots/menu_contactos.PNG)
 
 ### Visualización y edición de formatos
-![Ver Formatos](screenshots/menu_ver_formatos.png)
+![Ver Formatos](screenshots/menu_ver_formatos.PNG)
 
 ### Redacción de mensaje masivo
-![Nuevo Mensaje](screenshots/menu_nuevo_mensaje.png)
+![Nuevo Mensaje](screenshots/menu_nuevo_mensaje.PNG)
 
 ### Confirmación del envío con vista previa personalizada
-![Confirmar Envío](screenshots/enviar_mensaje.png)
+![Confirmar Envío](screenshots/enviar_mensaje.PNG)
