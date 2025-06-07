@@ -149,7 +149,7 @@ public partial class frmEditarContacto : Form
             label2.Size = new Size(57, 15);
             label2.TabIndex = 10;
             label2.Text = "Matricula";
-            label2.Click += label2_Click;
+           
             // 
             // txtSeudonimo
             // 

@@ -5,10 +5,19 @@ using SMSManager.Objetos.Modelos;
 
 namespace SMSManager.Datos.Repositorios
 {
+    /// <summary>
+    /// Repositorio responsable de registrar y consultar mensajes enviados en la base de datos.
+    /// </summary>
     public class MensajeEnviadoRepository
     {
+        /// <summary>
+        /// Cadena de conexión SQLite utilizada para acceder a la base de datos local del sistema.
+        /// </summary>
         private readonly string _cadenaConexion = "Data Source=smsmanager.db;Version=3;";
 
+        /// <summary>
+        /// Inserta un mensaje enviado en la base de datos como registro histórico.
+        /// </summary>
         public void Insertar(MensajeEnviado mensaje)
         {
             using var conexion = new SQLiteConnection(_cadenaConexion);
@@ -24,6 +33,9 @@ namespace SMSManager.Datos.Repositorios
             comando.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Devuelve la lista de todos los mensajes enviados registrados en la base de datos.
+        /// </summary>
         public List<MensajeEnviado> ObtenerTodos()
         {
             var lista = new List<MensajeEnviado>();

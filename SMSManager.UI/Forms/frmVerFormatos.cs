@@ -12,8 +12,14 @@ using SMSManager.Objetos.Modelos;
 
 namespace SMSManager.UI.Forms
 {
-    public partial class frmVerFormatos : BaseForm
+    /// <summary>
+    /// Formulario que muestra todos los formatos disponibles para consulta o edición.
+    /// </summary>
+    public partial class frmVerFormatos : FormPrincipal
     {
+        /// <summary>
+        /// Constructor. Inicializa el formulario y configura los eventos de carga y visibilidad.
+        /// </summary>
         public frmVerFormatos()
         {
             InitializeComponent();
@@ -22,6 +28,10 @@ namespace SMSManager.UI.Forms
             this.Load += frmVerFormatos_Load;
         }
 
+        /// <summary>
+        /// Evento que se ejecuta cuando el formulario se cierra.
+        /// Cierra completamente la aplicación si no quedan ventanas visibles.
+        /// </summary>
         private void frmVerFormatos_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (Application.OpenForms.Cast<Form>().All(f => !f.Visible))
@@ -29,6 +39,11 @@ namespace SMSManager.UI.Forms
                 Application.Exit();
             }
         }
+
+        /// <summary>
+        /// Evento que se ejecuta cuando se carga el formulario.
+        /// Llama a la función para cargar los formatos si no está en modo diseño.
+        /// </summary>
         private void frmVerFormatos_Load(object sender, EventArgs e)
         {
             if (!DesignMode)
@@ -36,6 +51,11 @@ namespace SMSManager.UI.Forms
                 CargarFormatos();
             }
         }
+
+        /// <summary>
+        /// Evento que se dispara al cambiar la visibilidad del formulario.
+        /// Recarga la lista de formatos cuando se vuelve visible.
+        /// </summary>
         private void frmVerFormatos_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible) 
@@ -43,6 +63,21 @@ namespace SMSManager.UI.Forms
                 CargarFormatos();
             }
         }
+
+        /// <summary>
+        /// Método sobrescrito que se utiliza cuando se navega a este formulario desde el menú principal.
+        /// Permite recargar la información (en este caso, los formatos) automáticamente
+        /// si el formulario ya estaba abierto.
+        /// </summary>
+        public override void CargarContenido()
+        {
+            CargarFormatos();
+        }
+
+        /// <summary>
+        /// Carga todos los formatos almacenados desde el servicio y los muestra en la grilla.
+        /// Se utiliza tanto al cargar como al actualizar la vista.
+        /// </summary>
         public void CargarFormatos()
         {
             try
@@ -63,11 +98,20 @@ namespace SMSManager.UI.Forms
                 MessageBox.Show($"Error al cargar los formatos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Actualizar".
+        /// Refresca manualmente la lista de formatos desde el servicio.
+        /// </summary>
         private void btnActualizarFormatos_Click(object sender, EventArgs e)
         {
             CargarFormatos();
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Nuevo Formato".
+        /// Abre el formulario de creación de un nuevo formato como ventana modal.
+        /// </summary>
         private void btnNuevoFormato_Click(object sender, EventArgs e)
         {
             using (var frm = new frmNuevoFormato())
@@ -79,6 +123,10 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Eliminar".
+        /// Elimina el formato seleccionado de la base de datos tras confirmar la acción.
+        /// </summary>
         private void btnEliminarFormato_Click(object sender, EventArgs e)
         {
             if (dgvFormatos.CurrentRow != null && dgvFormatos.CurrentRow.DataBoundItem is Formato formatoSeleccionado)
@@ -111,6 +159,10 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Editar".
+        /// Abre el formulario de edición con los datos del formato actualmente seleccionado.
+        /// </summary>
         private void btnEditarFormato_Click(object sender, EventArgs e)
         {
             if (dgvFormatos.CurrentRow != null && dgvFormatos.CurrentRow.DataBoundItem is Formato formatoSeleccionado)

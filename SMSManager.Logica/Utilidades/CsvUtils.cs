@@ -9,8 +9,15 @@ using System.IO;
 
 namespace SMSManager.Logica.Utilidades
 {
+    /// <summary>
+    /// Clase utilitaria para operaciones relacionadas con archivos CSV.
+    /// Permite leer contactos desde CSV y limpiar datos antes de procesarlos.
+    /// </summary>
     public static class CsvUtils
     {
+        /// <summary>
+        /// Lee un archivo CSV desde la ruta proporcionada y lo convierte en una lista de objetos Contacto.
+        /// </summary>
         public static List<Contacto> LeerContactosDesdeCsv(string rutaArchivo)
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)

@@ -12,10 +12,18 @@ using SMSManager.Objetos.Modelos;
 
 namespace SMSManager.UI.Forms
 {
+    /// <summary>
+    /// Formulario para crear un nuevo formato de mensaje o editar uno existente.
+    /// Permite definir variables que se reemplazarán al enviar mensajes.
+    /// </summary>
     public partial class frmNuevoFormato : Form
     {
         private Formato formatoEditar;
 
+        /// <summary>
+        /// Constructor que permite abrir el formulario en modo edición si se pasa un formato existente.
+        /// </summary>
+        /// <param name="formato">El formato a editar, o null para crear uno nuevo.</param>
         public frmNuevoFormato(Formato formato = null)
         {
             InitializeComponent();
@@ -31,7 +39,9 @@ namespace SMSManager.UI.Forms
         }
 
 
-
+        /// <summary>
+        /// Muestra una ventana de ayuda explicando cómo utilizar variables en el cuerpo del mensaje.
+        /// </summary>
         private void button3_Click(object sender, EventArgs e)
         {
             string ayudaFormato =
@@ -54,11 +64,18 @@ namespace SMSManager.UI.Forms
 
         }
 
+        /// <summary>
+        /// Cierra el formulario actual sin realizar cambios.
+        /// </summary>
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Guarda el nuevo formato o actualiza uno existente.
+        /// Valida el nombre y cuerpo antes de persistir los cambios.
+        /// </summary>
         private void button1_Click(object sender, EventArgs e)
         {
             string nombre = txtNombreFormato.Text.Trim();

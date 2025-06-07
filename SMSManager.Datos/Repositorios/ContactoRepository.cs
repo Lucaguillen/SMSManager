@@ -10,9 +10,15 @@ using SMSManager.Datos.Database;
 
 namespace SMSManager.Datos.Repositorios
 {
-    public  class ContactoRepository
+    /// <summary>
+    /// Repositorio encargado de realizar operaciones CRUD sobre la tabla Contactos.
+    /// </summary>
+    public class ContactoRepository
     {
-        public  void Insertar(Contacto contacto)
+        /// <summary>
+        /// Inserta un nuevo contacto en la base de datos.
+        /// </summary>
+        public void Insertar(Contacto contacto)
         {
             using var connection = DatabaseManager.ObtenerConexion();
 
@@ -35,27 +41,40 @@ namespace SMSManager.Datos.Repositorios
 
             command.ExecuteNonQuery();
         }
-
-        public  bool ExisteCedula(string cedula)
+        /// <summary>
+        /// Verifica si ya existe un contacto con la cédula proporcionada.
+        /// </summary>
+        public bool ExisteCedula(string cedula)
         {
             return ExisteCampo("Cedula", cedula);
         }
-
-        public  bool ExisteTelefono(string telefono)
+        /// <summary>
+        /// Verifica si ya existe un contacto con el número de teléfono proporcionado.
+        /// </summary>
+        public bool ExisteTelefono(string telefono)
         {
             return ExisteCampo("Telefono", telefono);
         }
-
-        public  bool ExisteMatricula(string matricula)
+        /// <summary>
+        /// Verifica si ya existe un contacto con la matrícula proporcionada.
+        /// </summary>
+        public bool ExisteMatricula(string matricula)
         {
             return ExisteCampo("Matricula", matricula);
         }
+
+        /// <summary>
+        /// Verifica si ya existe un contacto con el seudónimo proporcionado.
+        /// </summary>
         public bool ExisteSeudonimo(string seudonimo)
         {
             return ExisteCampo("Seudonimo", seudonimo);
         }
 
-        private  bool ExisteCampo(string campo, string valor)
+        /// <summary>
+        /// Verifica si ya existe un valor determinado en un campo específico de la tabla Contactos.
+        /// </summary>
+        private bool ExisteCampo(string campo, string valor)
         {
             using var connection = DatabaseManager.ObtenerConexion();
             using var command = connection.CreateCommand();

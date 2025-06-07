@@ -5,11 +5,28 @@ using SMSManager.Utilidades.Logging;
 
 namespace SMSManager.Datos.Database
 {
+    /// <summary>
+    /// Clase estática responsable de la inicialización y gestión básica de la base de datos SQLite.
+    /// Maneja la creación del archivo y las tablas necesarias para el funcionamiento del sistema.
+    /// </summary>
     public static class DatabaseManager
     {
+        /// <summary>
+        /// Ruta completa al archivo físico de la base de datos SQLite.
+        /// </summary>
         private static readonly string _dbFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SMSManager.db");
+
+        /// <summary>
+        /// Cadena de conexión utilizada para acceder a la base de datos.
+        /// </summary>
         private static readonly string _connectionString = $"Data Source={_dbFilePath};Version=3;";
 
+        /// <summary>
+        /// Inicializa la base de datos:
+        /// - Crea el archivo .db si no existe.
+        /// - Establece conexión.
+        /// - Crea las tablas necesarias si no existen.
+        /// </summary>
         public static void InicializarBaseDeDatos()
         {
             try
@@ -31,7 +48,10 @@ namespace SMSManager.Datos.Database
                 throw new Exception("Error al inicializar la base de datos.", ex);
             }
         }
-
+        /// <summary>
+        /// Crea las tablas necesarias en la base de datos si aún no existen.
+        /// Ejecuta múltiples sentencias CREATE TABLE IF NOT EXISTS.
+        /// </summary>
         private static void CrearTablasSiNoExisten(SQLiteConnection connection)
         {
             var command = connection.CreateCommand();
@@ -85,7 +105,10 @@ namespace SMSManager.Datos.Database
 
             command.ExecuteNonQuery();
         }
-
+        /// <summary>
+        /// Obtiene una nueva conexión abierta a la base de datos SQLite.
+        /// El llamador es responsable de cerrarla cuando termine de usarla.
+        /// </summary>
         public static SQLiteConnection ObtenerConexion()
         {
             var connection = new SQLiteConnection(_connectionString);

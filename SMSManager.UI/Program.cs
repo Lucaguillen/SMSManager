@@ -6,8 +6,16 @@ using SMSManager.Utilidades.Logging;
 
 namespace SMSManager.UI
 {
+    /// <summary>
+    /// Clase principal de arranque de la aplicación.
+    /// Contiene el punto de entrada donde se inicializa la base de datos y se lanza el formulario inicial.
+    /// </summary>
     internal static class Program
     {
+        /// <summary>
+        /// Punto de entrada principal de la aplicación.
+        /// Inicializa la base de datos, configura la aplicación y muestra el formulario de contactos.
+        /// </summary>
         [STAThread]
         static void Main()
         {

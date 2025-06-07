@@ -12,13 +12,22 @@ namespace SMSManager.Logica.Servicios
 {
     public class ContactoService
     {
+        /// <summary>
+        /// Repositorio utilizado para acceder y manipular datos de contactos en la base de datos.
+        /// </summary>
         private readonly ContactoRepository contactoRepository;
 
+        /// <summary>
+        /// Constructor. Inicializa el repositorio de contactos.
+        /// </summary>
         public ContactoService()
         {
             contactoRepository = new ContactoRepository();
         }
-
+        /// <summary>
+        /// Importa contactos desde un archivo CSV. Valida y guarda los contactos válidos.
+        /// Devuelve un resultado con estadísticas y errores encontrados.
+        /// </summary>
         public ResultadoImportacion ImportarDesdeCsv(string rutaArchivo)
         {
             var resultado = new ResultadoImportacion();
@@ -71,37 +80,61 @@ namespace SMSManager.Logica.Servicios
             return resultado;
         }
 
+        /// <summary>
+        /// Valida que un contacto tenga todos los campos obligatorios (nombre, apellido, teléfono).
+        /// </summary>
         private bool EsContactoValido(Contacto contacto)
         {
             return !string.IsNullOrWhiteSpace(contacto.Seudonimo) &&
                    !string.IsNullOrWhiteSpace(contacto.Telefono);
         }
+
+        /// <summary>
+        /// Verifica que el número de teléfono contenga exactamente 9 dígitos numéricos.
+        /// </summary>
         private bool EsTelefonoValido(Contacto contacto)
         {
             return contacto.Telefono.All(char.IsDigit) &&
                    contacto.Telefono.Length == 9;
         }
-         
-                   
 
+
+        /// <summary>
+        /// Verifica si ya existe un contacto con la misma cédula en la base de datos.
+        /// </summary>
         private bool YaExisteCedula(Contacto contacto)
         {
             return contactoRepository.ExisteCedula(contacto.Cedula);
         }
+
+        /// <summary>
+        /// Verifica si ya existe un contacto con el mismo número de teléfono en la base de datos.
+        /// </summary>
         private bool YaExisteTel(Contacto contacto)
         {
             return contactoRepository.ExisteTelefono(contacto.Telefono);
 
         }
+
+        /// <summary>
+        /// Verifica si ya existe un contacto con la misma matrícula en la base de datos.
+        /// </summary>
         private bool YaExisteMat(Contacto contacto)
         {
             return contactoRepository.ExisteMatricula(contacto.Matricula);
         }
+
+        /// <summary>
+        /// Verifica si ya existe un contacto con el mismo seudónimo en la base de datos.
+        /// </summary>
         private bool YaExisteSeu(Contacto contacto)
         {
             return contactoRepository.ExisteSeudonimo(contacto.Seudonimo);
         }
 
+        /// <summary>
+        /// Obtiene todos los contactos almacenados en la base de datos.
+        /// </summary>
         public List<Contacto> ObtenerTodos()
         {
             var listaContactos = new List<Contacto>();
@@ -142,6 +175,9 @@ namespace SMSManager.Logica.Servicios
             return listaContactos;
         }
 
+        /// <summary>
+        /// Agrega un nuevo contacto a la base de datos.
+        /// </summary>
         public void Agregar(Contacto contacto)
         {
             try
@@ -171,7 +207,9 @@ namespace SMSManager.Logica.Servicios
                 throw new Exception("Error al agregar un nuevo contacto.", ex);
             }
         }
-
+        /// <summary>
+        /// Actualiza un contacto existente en la base de datos.
+        /// </summary>
         public void Actualizar(Contacto contacto)
         {
             try
@@ -202,6 +240,9 @@ namespace SMSManager.Logica.Servicios
             }
         }
 
+        /// <summary>
+        /// Elimina un contacto por su identificador.
+        /// </summary>
         public void Eliminar(int id)
         {
             try
@@ -223,6 +264,9 @@ namespace SMSManager.Logica.Servicios
             }
         }
 
+        /// <summary>
+        /// Elimina todos los contactos de la base de datos.
+        /// </summary>
         public void EliminarTodosLosContactos() {
             try
             {
@@ -241,7 +285,5 @@ namespace SMSManager.Logica.Servicios
                 throw new Exception("Error al eliminar todos los contactos .", ex);
             }
         }
-
-
     }
 }

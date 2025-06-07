@@ -11,14 +11,24 @@ using SMSManager.Datos.Repositorios;
 using SMSManager.Logica.Servicios;
 using SMSManager.Objetos.Modelos;
 using SMSManager.Utilidades.Logging;
+using SMSManager.Logica.Utilidades;
 
 namespace SMSManager.UI.Forms
 {
+    /// <summary>
+    /// Formulario que permite revisar y confirmar el envío de mensajes SMS a una lista de contactos.
+    /// </summary>
     public partial class frmConfirmarEnvio : Form
     {
 
-
+        /// <summary>
+        /// Lista de contactos a quienes se enviarán los mensajes.
+        /// </summary>
         private List<Contacto> _contactos;
+
+        /// <summary>
+        /// Constructor. Inicializa el formulario con la lista de contactos recibida como parámetro.
+        /// </summary>
         public frmConfirmarEnvio(List<Contacto> contactos)
         {
             InitializeComponent();
@@ -31,6 +41,10 @@ namespace SMSManager.UI.Forms
 
         }
 
+        /// <summary>
+        /// Envía un mensaje SMS de forma asincrónica al número especificado.
+        /// Valida la configuración de la API antes de enviar.
+        /// </summary>
         private async Task<bool> EnviarMensajeAsync(string numero, string mensaje)
         {
             try
@@ -81,7 +95,9 @@ namespace SMSManager.UI.Forms
             }
         }
 
-
+        /// <summary>
+        /// Registra en el historial el mensaje enviado, incluyendo destinatario, contenido y fecha/hora.
+        /// </summary>
         private void RegistrarEnHistorial(string telefono, string seudonimo, string mensaje, string estado)
         {
             var historialRepo = new MensajeEnviadoRepository();
@@ -98,11 +114,17 @@ namespace SMSManager.UI.Forms
             historialRepo.Insertar(registro);
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al cargar el formulario. Configura y muestra los datos de contacto en la grilla.
+        /// </summary>
         private void frmConfirmarEnvio_Load(object sender, EventArgs e)
         {
             CargarFormatos();
         }
 
+        /// <summary>
+        /// Carga los formatos de mensaje disponibles en el combo desplegable al iniciar el formulario.
+        /// </summary>
         private void CargarFormatos()
         {
             var servicio = new FormatoService();
@@ -112,6 +134,10 @@ namespace SMSManager.UI.Forms
             cmbFormato.ValueMember = "Id";
             cmbFormato.DataSource = formatos;
         }
+
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en una celda de la grilla, útil para acciones contextuales como eliminar.
+        /// </summary>
         private void dgvDestinatarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0)
@@ -130,6 +156,9 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al cerrar el formulario. Muestra nuevamente el formulario anterior si es necesario.
+        /// </summary>
         private void FrmConfirmarEnvio_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (Application.OpenForms.Cast<Form>().All(f => !f.Visible))
@@ -137,6 +166,10 @@ namespace SMSManager.UI.Forms
                 Application.Exit();
             }
         }
+
+        /// <summary>
+        /// Evento que se ejecuta cuando se cambia la selección en la grilla de destinatarios.
+        /// </summary>
         private void dgvDestinatarios_SelectionChanged(object sender, EventArgs e)
         {
             if (cmbFormato.SelectedItem is not Formato formatoSeleccionado || dgvDestinatarios.CurrentRow == null)
@@ -175,6 +208,10 @@ namespace SMSManager.UI.Forms
             txtVistaPrevia.Text = textoBase;
         }
 
+        /// <summary>
+        /// Evento que se dispara cuando se cambia la opción seleccionada en el combo de formatos.
+        /// Actualiza el contenido del mensaje en pantalla.
+        /// </summary>
         private void cmbFormato_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbFormato.SelectedItem is Formato formatoSeleccionado)
@@ -194,6 +231,10 @@ namespace SMSManager.UI.Forms
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
         }
+
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón de limpiar destinatarios seleccionados.
+        /// </summary>
         private void button3_Click(object sender, EventArgs e)
         {
 
@@ -214,6 +255,10 @@ namespace SMSManager.UI.Forms
 
             this.Close();
         }
+
+        /// <summary>
+        /// Reconstruye el contenido de la grilla de destinatarios tras cambios en la lista.
+        /// </summary>
         private void ReconstruirGrilla(List<string> placeholders)
         {
             dgvDestinatarios.Columns.Clear();
@@ -295,6 +340,10 @@ namespace SMSManager.UI.Forms
             dgvDestinatarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón de cancelar y cerrar el formulario.
+        /// </summary>
         private void button4_Click(object sender, EventArgs e)
         {
             var confirmacion = MessageBox.Show("¿Estás seguro de que quieres quitar todas las selecciones?",
@@ -312,6 +361,9 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón para quitar un contacto seleccionado de la lista de envío.
+        /// </summary>
         private async void button2_Click(object sender, EventArgs e)
         {
             if (cmbFormato.SelectedItem is not Formato formatoSeleccionado)
@@ -401,7 +453,10 @@ namespace SMSManager.UI.Forms
         }
 
 
-
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Enviar todos".
+        /// Envía el mensaje a todos los contactos en la lista de forma asincrónica.
+        /// </summary>
         private async void btnEnviarTodos_Click(object sender, EventArgs e)
         {
             if (cmbFormato.SelectedItem is not Formato formatoSeleccionado)

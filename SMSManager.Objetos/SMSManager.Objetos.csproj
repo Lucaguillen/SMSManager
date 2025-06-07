@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Modelos\Envio.cs" />
+    <Compile Remove="Modelos\Plantilla.cs" />
+  </ItemGroup>
+
 </Project>

@@ -16,19 +16,35 @@ using SMSManager.Logica.Utilidades;
 
 namespace SMSManager.UI.Forms
 {
+    /// <summary>
+    /// Formulario que permite editar la información de un contacto existente.
+    /// </summary>
     public partial class frmEditarContacto : Form
     {
         private readonly Contacto contactoEditar;
+
+        /// <summary>
+        /// Constructor que recibe el contacto a editar y lo asigna internamente.
+        /// </summary>
+        /// <param name="contacto">El contacto que se desea editar.</param>
         public frmEditarContacto(Contacto contacto)
         {
             InitializeComponent();
             contactoEditar = contacto;
         }
+
+        /// <summary>
+        /// Constructor sin parámetros, requerido por el diseñador de Windows Forms.
+        /// </summary>
         public frmEditarContacto()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón Guardar.
+        /// Valida y actualiza los datos del contacto si todo es correcto.
+        /// </summary>
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -127,13 +143,20 @@ namespace SMSManager.UI.Forms
             }
         }
 
-
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón Cancelar.
+        /// Cierra el formulario sin guardar cambios.
+        /// </summary>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al cargar el formulario.
+        /// Carga los datos actuales del contacto en los campos del formulario.
+        /// </summary>
         private void frmEditarContacto_Load(object sender, EventArgs e)
         {
             try
@@ -162,11 +185,6 @@ namespace SMSManager.UI.Forms
                 MessageBox.Show("Error inesperado al cargar el formulario de edición.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

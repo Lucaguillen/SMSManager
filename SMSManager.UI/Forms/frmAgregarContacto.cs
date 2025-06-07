@@ -16,13 +16,22 @@ using SMSManager.Utilidades.Validaciones;
 
 namespace SMSManager.UI.Forms
 {
+    /// <summary>
+    /// Formulario para agregar manualmente un nuevo contacto al sistema.
+    /// </summary>
     public partial class frmAgregarContacto : Form
     {
+        /// <summary>
+        /// Constructor. Inicializa los componentes del formulario.
+        /// </summary>
         public frmAgregarContacto()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Evento del botón Guardar. Valida los campos y guarda el nuevo contacto si es válido.
+        /// </summary>
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -118,6 +127,9 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento del botón Cancelar. Cierra el formulario sin guardar cambios.
+        /// </summary>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;

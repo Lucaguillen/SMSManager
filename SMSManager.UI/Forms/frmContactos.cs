@@ -16,14 +16,33 @@ using SMSManager.Utilidades.Validaciones;
 
 namespace SMSManager.UI.Forms
 {
-    public partial class frmContactos : BaseForm
+    /// <summary>
+    /// Formulario principal para visualizar, editar, buscar y administrar la lista de contactos del sistema.
+    /// </summary>
+    public partial class frmContactos : FormPrincipal
     {
+        /// <summary>
+        /// Constructor. Inicializa el formulario y oculta los encabezados de las filas en la grilla.
+        /// </summary>
         public frmContactos()
         {
             InitializeComponent();
             dgvContactos.RowHeadersVisible = false;
 
         }
+
+        /// <summary>
+        /// Sobrescribe el método base para cargar el contenido específico del formulario.
+        /// En este caso, recarga la lista de contactos desde la base de datos.
+        /// </summary>
+        public override void CargarContenido()
+        {
+            CargarContactos(); 
+        }
+
+        /// <summary>
+        /// Carga y muestra todos los contactos desde la base de datos en la grilla principal.
+        /// </summary>
         public void CargarContactos()
         {
             try
@@ -47,6 +66,10 @@ namespace SMSManager.UI.Forms
                 MessageBox.Show($"Error al cargar los contactos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        /// <summary>
+        /// Evento que se dispara al cargar el formulario. Llama a CargarContactos si no está en modo diseño.
+        /// </summary>
         private void frmContactos_Load(object sender, EventArgs e)
         {
             if (!DesignMode)
@@ -54,6 +77,11 @@ namespace SMSManager.UI.Forms
                 CargarContactos();
             }
         }
+
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Editar".
+        /// Abre un formulario para modificar el contacto actualmente seleccionado en la grilla.
+        /// </summary>
         private void btnEditar_Click(object sender, EventArgs e)
         {
             try
@@ -79,11 +107,19 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Actualizar".
+        /// Recarga la lista completa de contactos desde la base de datos.
+        /// </summary>
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             CargarContactos();
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Agregar".
+        /// Abre el formulario para agregar un nuevo contacto.
+        /// </summary>
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
@@ -104,10 +140,18 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Buscar".
+        /// Filtra la lista de contactos según el texto ingresado.
+        /// </summary>
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             BuscarContactos();
         }
+
+        /// <summary>
+        /// Compara dos textos y determina si son similares ignorando mayúsculas y espacios.
+        /// </summary>
         private bool EsSimilar(string entrada, string campo)
         {
             if (string.IsNullOrEmpty(campo)) return false;
@@ -119,7 +163,9 @@ namespace SMSManager.UI.Forms
             return score >= 75;
         }
 
-
+        /// <summary>
+        /// Filtra y muestra contactos cuya cédula, nombre o seudónimo coincidan parcialmente con el texto ingresado.
+        /// </summary>
         private void BuscarContactos()
         {
             string textoFiltro = ValidadorDeDatos.NormalizarTexto(txtBuscar.Text.Trim());
@@ -144,7 +190,10 @@ namespace SMSManager.UI.Forms
             dgvContactos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Eliminar".
+        /// Elimina el contacto actualmente seleccionado, tras confirmación del usuario.
+        /// </summary>
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             try
@@ -177,11 +226,19 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al cambiar el texto del campo de búsqueda.
+        /// Aplica el filtro automáticamente si hay texto ingresado.
+        /// </summary>
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Importar".
+        /// Abre el formulario de importación masiva de contactos desde archivo CSV.
+        /// </summary>
         private void btnImportar_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -214,6 +271,10 @@ namespace SMSManager.UI.Forms
             }
         }
 
+        /// <summary>
+        /// Evento que se ejecuta al hacer clic en el botón "Volver".
+        /// Cierra este formulario y regresa a la ventana anterior.
+        /// </summary>
         private void btnVolver_Click(object sender, EventArgs e)
         {
             txtBuscar.Text = string.Empty;
